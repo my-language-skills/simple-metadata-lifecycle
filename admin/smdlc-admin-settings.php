@@ -146,6 +146,7 @@ function smdlc_render_settings() {
 function smdlc_render_metabox_schema_locations(){
 	?>
 	<div id="smdlc_meta_locations" class="smdlc_meta_locations">
+		<span class="description">Description for lifecycle locations metabox</span>
 		<form method="post" action="options.php">
 			<?php
 			settings_fields( 'smdlc_meta_locations' );
@@ -168,6 +169,7 @@ function smdlc_render_metabox_properties(){
 	if (isset($locations[$level]) && $locations[$level]){
 	?>
 	<div id="smdlc_meta_properties" class="smdlc_meta_properties">
+		<span class="description">Description for lifecycle properties metabox</span>
 		<form method="post" action="options.php">
 			<?php
 			settings_fields( 'smdlc_meta_properties' );
@@ -191,10 +193,10 @@ function smdlc_render_metabox_properties(){
 function smdlc_update_overwrites(){
 
 	//collecting options values
-	$locations = get_option('smdlc_locations');
-	$shares = get_option('smdlc_shares');
-	$freezes = get_option('smdlc_freezes');
-	
+	$locations = get_option('smdlc_locations') ?: [];
+	$shares = get_option('smdlc_shares') ?: [];
+	$freezes = get_option('smdlc_freezes') ?: [];
+
 	//if nothing is chosen to share or freeze, return
 	if(empty($shares) && empty($freezes)){
 		return;
@@ -301,3 +303,12 @@ function smdlc_update_overwrites(){
 }
 
 add_action('admin_menu', 'smdlc_add_lyfecycle_settings', 100);
+add_action('updated_option', function( $option_name, $old_value, $value ){
+	if ('smdlc_freezes' == $option_name){
+		$shares = get_option('smdlc_shares') ?: [];
+		$value = empty($value) ? [] : $value;
+		$shares = array_merge($shares, $value);
+		
+		update_option('smdlc_shares', $shares);
+	}
+}, 10, 3);

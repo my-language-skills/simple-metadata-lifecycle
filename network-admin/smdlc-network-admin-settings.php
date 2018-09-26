@@ -49,12 +49,13 @@ function smdlc_add_network_settings() {
 
 	//adding settings for educational properties management
 	foreach (lifecycle_meta::$lifecycle_properties as $key => $data) {
-		add_settings_field ('smdlc_net_'.$key, ucfirst($data[0]), function () use ($key, $shares, $freezes){
+		add_settings_field ('smdlc_net_'.$key, ucfirst($data[0]), function () use ($key, $data, $shares, $freezes){
 			$checked_share = isset($shares[$key]) ? true : false;
 			$checked_freeze = isset($freezes[$key]) ? true : false;
 			?>
 				<label for="smdlc_net_shares[<?=$key?>]"><i>Share</i> <input type="checkbox" name="smdlc_net_shares[<?=$key?>]" id="smdlc_net_shares[<?=$key?>]" value="1" <?php checked(1, $checked_share);?>></label>
 				<label for="smdlc_net_freezes[<?=$key?>]"><i>Freeze</i> <input type="checkbox" name="smdlc_net_freezes[<?=$key?>]" id="smdlc_net_freezes[<?=$key?>]" value="1" <?php checked(1, $checked_freeze);?>></label>
+				<br><span class="description"><?=$data[1]?></span>
 			<?php
 		}, 'smdlc_network_meta_properties', 'smdlc_network_meta_properties');
 	}
@@ -100,6 +101,7 @@ function smdlc_render_network_settings(){
 function smdlc_network_render_metabox_schema_locations(){
 	?>
 	<div id="smdlc_network_meta_locations" class="smdlc_network_meta_locations">
+		<span class="description">Description for lifecycle network locations metabox</span>
 		<form method="post" action="edit.php?action=smdlc_update_network_locations">
 			<?php
 			settings_fields( 'smdlc_network_meta_locations' );
@@ -118,11 +120,12 @@ function smdlc_network_render_metabox_schema_locations(){
 function smdlc_network_render_metabox_properties(){
 	?>
 	<div id="smdlc_network_meta_properties" class="smdlc_network_meta_properties">
+		<span class="description">Description for lifecycle network properties metabox</span>
 		<form method="post" action="edit.php?action=smdlc_update_network_options">
 			<?php
 			settings_fields( 'smdlc_network_meta_properties' );
-			submit_button();
 			do_settings_sections( 'smdlc_network_meta_properties' );
+			submit_button();
 			?>
 		</form>
 		<p></p>
@@ -187,7 +190,9 @@ function smdlc_update_network_options() {
     //collecting network options values from request
     $freezes = isset($_POST['smdlc_net_freezes']) ? $_POST['smdlc_net_freezes'] : array();
     $shares = isset($_POST['smdlc_net_shares']) ? $_POST['smdlc_net_shares'] : array();
-    
+    //if property is frozen, it's automatically shared
+    $shares = array_merge($shares, $freezes);
+
     //updating network options in DB
 	update_blog_option(1, 'smdlc_net_freezes', $freezes);
 	update_blog_option(1, 'smdlc_net_shares', $shares);

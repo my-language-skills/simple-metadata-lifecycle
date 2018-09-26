@@ -218,7 +218,7 @@ class SMDLC_Metadata_Lifecycle{
 	 * @since    0.x
 	 * @access   public
 	 */
-	public function smdlc_get_metatags() {
+	public function smdlc_get_metatags($type) {
 		//Getting the information from the database
         if($this->type_level == 'metadata' || $this->type_level == 'site-meta'){
             $this->metadata = self::get_site_meta_metadata();
@@ -242,6 +242,9 @@ class SMDLC_Metadata_Lifecycle{
 				continue;
 			} else {
 				$html .= "<meta itemprop='$key' value='$val'>\n";
+				if (('Book' == $type || 'Chapter' == $type) && 'version' == $key){
+					$html .= "<meta itemprop='bookEdition' value='$val'>\n";
+				}
 			}
 		}
 

@@ -7,7 +7,7 @@ use \vocabularies\SMDLC_Metadata_Lifecycle as lifecycle_meta;
 /**
  * Function for printing metatags in site front-end
  */
-function smdlc_print_tags () {
+function smdlc_print_tags ($type) {
 
 	$locations = get_option('smdlc_locations');
 
@@ -25,12 +25,12 @@ function smdlc_print_tags () {
 	if ( is_front_page() ) {
 		if (isset($locations[$front_schema]) && $locations[$front_schema]) {
 			$lifecycle_meta = new lifecycle_meta($front_schema);
-			echo $lifecycle_meta->smdlc_get_metatags();
+			echo $lifecycle_meta->smdlc_get_metatags($type);
 		}
 	} elseif (!is_home()){
 		if (isset($locations[$post_schema]) && $locations[$post_schema]) {
 			$lifecycle_meta = new lifecycle_meta($post_schema);
-			echo $lifecycle_meta->smdlc_get_metatags();
+			echo $lifecycle_meta->smdlc_get_metatags($type);
 		}
 	}
 
