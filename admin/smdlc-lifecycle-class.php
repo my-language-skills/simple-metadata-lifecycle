@@ -74,10 +74,8 @@ class SMDLC_Metadata_Lifecycle{
         }
 
 		?>
-        <hr />
         <p><strong><?=$property?></strong> is overwritten by <?=$dataFrom?>. The value is"<?=$label?>"</p>
         <input type="hidden" name="<?=$field_slug?>" value="<?=$meta_value?>" />
-        <hr />
         <?php
 	}
 
