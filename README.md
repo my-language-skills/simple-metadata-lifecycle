@@ -38,7 +38,7 @@ The Simple Metadata Life Cycle plugin is supplied "as is" and all use is at your
 
 
 ## Changelog
-See detailed changelog [here][/doc/CHANGELOG.md]
+Take a look at detailed changelog [here](/doc/CHANGELOG.md)
 ### 1.0
 * Initial release
 * Version property created
