@@ -40,11 +40,11 @@ The Simple Metadata Life Cycle plugin is supplied "as is" and all use is at your
 ## Changelog
 ### 1.0
 * **Additions**
-  
+
   * **Properties**
     * **Life Cycle**
       * Version
-  
+
   * **Administration**
    * **Settings**
       * **Network settings** (uses Simple-Metadata network settings page)
@@ -63,7 +63,7 @@ The Simple Metadata Life Cycle plugin is supplied "as is" and all use is at your
         * **Site Meta**
           This is a place where you enter metadata infromation, which will be shown in front-page of a site.
       *Overwriting and seeding applies information, stored in Site-Meta/Book Info to all active post types*
-      
+
 
 ## Upgrade Notice
 ### 0.2
@@ -82,4 +82,3 @@ Here's a link to [Markdown's Syntax Documentation](https://daringfireball.net/pr
 ---
 
 [Up](/README.md)
-
