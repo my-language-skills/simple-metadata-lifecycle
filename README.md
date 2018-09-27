@@ -1,19 +1,14 @@
 # Simple Metadata Lifecycle
 
-Contributors: @colomet, @danzhik
-
-Tags: pressbooks, links, metadata, education
-
-Tags: pressbooks, links, metadata, education
-
-Tested up to: [![WordPress](https://img.shields.io/wordpress/v/akismet.svg)](https://wordpress.org/download/)
-
-
-Stable tag: [![Current Release](https://img.shields.io/github/release/my-language-skills/simple-metadata-education.svg)](https://github.com/my-language-skills/simple-metadata-lifecycle/releases/latest/)
-
-License:  [![License](https://img.shields.io/badge/license-GPL--3.0%2B-red.svg)](https://github.com/my-language-skills/simple-metadata-lifecycle/blob/master/license.txt)
-
-License URI: http://www.gnu.org/licenses/gpl-3.0.html
+* Contributors: @colomet, @danzhik
+* Donate link: https://opencollective.com/mylanguageskills
+* Tags: pressbooks,, metadata, lifecycle, version
+* Requires at least: 4.9.6
+* Tested up to: 4.9.8
+* Requires PHP: 7.2.0
+* Stable tag: 1.0
+* License: GNU 3.0
+* License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
 ## Description
 This addon describes the history and current state of this content and those entities that have affected this content during its evolution.
