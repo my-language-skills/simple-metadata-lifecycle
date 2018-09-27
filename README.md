@@ -29,6 +29,7 @@ This addon describes the history and current state of this content and those ent
 Plugin works with:
 
 - ![PHP](https://img.shields.io/badge/PHP-7.2.X-blue.svg)
+- ![WordPress](https://img.shields.io/badge/WordPress-4.9.8-blue.svg)
 
 ## Disclaimers
 The Simple Metadata Life Cycle plugin is supplied "as is" and all use is at your own risk.
