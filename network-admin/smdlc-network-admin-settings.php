@@ -145,7 +145,20 @@ function smdlc_update_network_locations() {
 
 	$locations = isset($_POST['smdlc_net_locations']) ? $_POST['smdlc_net_locations'] : array();
 
+	//collecting locations of general meta accumulative option from POST request
+	$locations_general = get_blog_option(1, 'smd_net_locations') ?: array();
+
+	$locations_general = array_merge($locations_general, $locations);
+
+	if (isset($locations_general['metadata'])){
+		unset($locations_general['metadata']);
+	}
+	if (isset($locations_general['site-meta'])){
+		unset($locations_general['site-meta']);
+	}
+
 	update_blog_option(1, 'smdlc_net_locations', $locations);
+	update_blog_option(1, 'smd_net_locations', $locations_general);
 
 	//Grabbing all the site IDs
     $siteids = $wpdb->get_col("SELECT blog_id FROM $wpdb->blogs");
@@ -160,11 +173,14 @@ function smdlc_update_network_locations() {
 
     	//we merge values received from network settings with local values of every blog
     	$locations_local = get_option('smdlc_locations') ?: array();
+    	$locations_local_general = get_option('smd_locations') ?: array();
 
     	$locations_local = array_merge($locations_local, $locations);
+    	$locations_local_general = array_merge($locations_local_general, $locations_general);
 
     	//updating local options
     	update_option('smdlc_locations', $locations_local);
+    	update_option('smd_locations', $locations_local_general);
 
     }
 
