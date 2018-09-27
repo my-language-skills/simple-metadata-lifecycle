@@ -16,11 +16,6 @@ defined ("ABSPATH") or die ("No script assholes!");
 
 require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
 
-//if not presbooks and AIOM not installed, load custom_metadata symbiont (when all packages will be organized, second condition can be removed)
-if (!is_plugin_active('pressbooks/pressbooks.php') && !function_exists('x_add_metadata_field')){
-	require_once plugin_dir_path( dirname(__FILE__ ) ) . '/simple-metadata-lifecycle/symbionts/custom-metadata/custom_metadata.php';
-}
-
 //we only enable plugin functionality if main plugin - Simple Metadata - is installed
 if(is_plugin_active('simple-metadata/simple-metadata.php')){
 	include_once plugin_dir_path( __FILE__ ) . "admin/smdlc-lifecycle-class.php";
