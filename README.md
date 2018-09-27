@@ -38,31 +38,10 @@ The Simple Metadata Life Cycle plugin is supplied "as is" and all use is at your
 
 
 ## Changelog
+See detailed changelog [here][/doc/CHANGELOG.md]
 ### 1.0
-* **Additions**
-
-  * **Properties**
-    * **Life Cycle**
-      * Version
-
-  * **Administration**
-   * **Settings**
-      * **Network settings** (uses Simple-Metadata network settings page)
-        * Post types active for Life Cycle Metadata (show/not show metatags in web-pages code and metaboxes to fill in information)
-        * Overwriting of properties (Freeze)
-        * Seeding properties values (Share, affects only if desired field is empty in active post level)
-        * Language Education Mode (on/off)
-      *Network settings overwrite all site settings and block ability to change them!*
-      * **Site Settings**
-        * **Simple Metadata Settings Page**
-          * Post types active for Life Cycle Metadata (show/not show metatags in web-pages code and metaboxes to fill in information)
-        * **Educational Metadata Settings** (subpage under Simple Metadata Settings)  
-          * Overwriting of properties (Freeze)
-          * Seeding properties values (Share, affects only if desired field is empty in active post level)
-      *If overwriting for some property is activated, seeding is also marked active in order to avoid misunderstanding for user*
-        * **Site Meta**
-          This is a place where you enter metadata infromation, which will be shown in front-page of a site.
-      *Overwriting and seeding applies information, stored in Site-Meta/Book Info to all active post types*
+* Initial release
+* Version property created
 
 
 ## Upgrade Notice
