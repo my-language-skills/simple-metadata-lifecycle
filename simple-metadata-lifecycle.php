@@ -18,7 +18,7 @@ require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
 
 //we only enable plugin functionality if main plugin - Simple Metadata - is installed
 if(is_plugin_active('simple-metadata/simple-metadata.php')){
-	include_once plugin_dir_path( __FILE__ ) . "admin/smdlc-lifecycle-class.php";
+	include_once plugin_dir_path( __FILE__ ) . "admin/vocabularies/smdlc-lifecycle-class.php";
 	include_once plugin_dir_path( __FILE__ ) . "admin/smdlc-admin-settings.php";
 	include_once plugin_dir_path( __FILE__ ) . "admin/smdlc-output.php";
 	include_once plugin_dir_path( __FILE__ ) . "admin/smdlc-init-metaboxes.php";

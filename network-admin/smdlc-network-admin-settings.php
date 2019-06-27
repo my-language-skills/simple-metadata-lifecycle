@@ -23,14 +23,16 @@ function smdlc_add_network_settings() {
     register_setting('smdlc_network_meta_locations', 'smdlc_net_locations');
 	register_setting ('smdlc_network_meta_properties', 'smdlc_net_shares');
 	register_setting ('smdlc_network_meta_properties', 'smdlc_net_freezes');
-	
+  register_setting ('smdlc_network_meta_properties', 'smdlc_net_');
+
 
 	// getting options values from DB
 	$post_types = smd_get_all_post_types();
 	$locations = get_option('smdlc_net_locations');
 	$shares = get_option('smdlc_net_shares');
 	$freezes = get_option('smdlc_net_freezes');
-	
+  $shares1 = get_option('smdlc_net_');
+
 
 	//adding settings for locations
 	foreach ($post_types as $post_type) {
@@ -50,12 +52,19 @@ function smdlc_add_network_settings() {
 	//adding settings for educational properties management
 	foreach (lifecycle_meta::$lifecycle_properties as $key => $data) {
 		add_settings_field ('smdlc_net_'.$key, ucfirst($data[0]), function () use ($key, $data, $shares, $freezes){
-			$checked_share = isset($shares[$key]) ? true : false;
-			$checked_freeze = isset($freezes[$key]) ? true : false;
+      $shares1[$key] = !empty($shares1[$key]) ? $shares1[$key] : '0';
+
 			?>
-				<label for="smdlc_net_shares[<?=$key?>]"><i>Share</i> <input type="checkbox" name="smdlc_net_shares[<?=$key?>]" id="smdlc_net_shares[<?=$key?>]" value="1" <?php checked(1, $checked_share);?>></label>
-				<label for="smdlc_net_freezes[<?=$key?>]"><i>Freeze</i> <input type="checkbox" name="smdlc_net_freezes[<?=$key?>]" id="smdlc_net_freezes[<?=$key?>]" value="1" <?php checked(1, $checked_freeze);?>></label>
-				<br><span class="description"><?=$data[1]?></span>
+      <label for="smdlc_net_disable[<?=$key?>]">Disable <input type="radio"  name="smdlc_net_[<?=$key?>]" value="1" id="smdlc_net_disable[<?=$key?>]" <?php if ($shares1[$key]=='1') { echo "checked='checked'"; }
+      ?>  ></label>
+      <label for="smdlc_net_local_value[<?=$key?>]">Local value <input type="radio"  name="smdlc_net_[<?=$key?>]" value="0" id="smdlc_net_local_value[<?=$key?>]" <?php if ($shares1[$key]=='0' ) { echo "checked='checked'"; }
+      ?>  ></label>
+      <label  for="smdlc_net_share[<?=$key?>]">Share <input type="radio"  name="smdlc_net_[<?=$key?>]" value="2" id="smdlc_net_share[<?=$key?>]" <?php if ($shares1[$key]=='2') { echo "checked='checked'"; }
+      ?>  ></label>
+      <label for="smdlc_net_freeze[<?=$key?>]">Freeze <input type="radio"  name="smdlc_net_[<?=$key?>]" value="3" id="smdlc_net_freeze[<?=$key?>]"  <?php if ($shares1[$key]=='3') { echo "checked='checked'"; }
+      ?> ></label>
+        <br><span class="description"><?=$data[1]?></span>
+
 			<?php
 		}, 'smdlc_network_meta_properties', 'smdlc_network_meta_properties');
 	}
@@ -72,7 +81,7 @@ function smdlc_render_network_settings(){
 	    ?>
 	    <div class="wrap">
 	    	<?php if (isset($_GET['settings-updated']) && $_GET['settings-updated']) { ?>
-        	<div class="notice notice-success is-dismissible"> 
+        	<div class="notice notice-success is-dismissible">
 				<p><strong>Settings saved.</strong></p>
 			</div>
 			<?php } ?>
@@ -202,16 +211,12 @@ function smdlc_update_network_options() {
 
 	//Wordpress Database variable for database operations
     global $wpdb;
-
+    $shares1 = isset($_POST['smdlc_net_']) ? $_POST['smdlc_net_'] : array();
     //collecting network options values from request
-    $freezes = isset($_POST['smdlc_net_freezes']) ? $_POST['smdlc_net_freezes'] : array();
-    $shares = isset($_POST['smdlc_net_shares']) ? $_POST['smdlc_net_shares'] : array();
     //if property is frozen, it's automatically shared
-    $shares = array_merge($shares, $freezes);
 
     //updating network options in DB
-	update_blog_option(1, 'smdlc_net_freezes', $freezes);
-	update_blog_option(1, 'smdlc_net_shares', $shares);
+    update_blog_option(1, 'smdlc_net_', $shares1);
 
 	//Grabbing all the site IDs
     $siteids = $wpdb->get_col("SELECT blog_id FROM $wpdb->blogs");
@@ -226,16 +231,13 @@ function smdlc_update_network_options() {
     	switch_to_blog($site_id);
 
     	//> we merge values received from network settings with local values of every blog
-    	$freezes_local = get_option('smdlc_freezes') ?: array();
-    	$frezees_local = array_merge($freezes_local, $freezes);
 
-    	$shares_local = get_option('smdlc_shares') ?: array();
-    	$shares_local = array_merge($shares_local, $shares);
-    	//<  	
+    	$shares1_local = get_option('smdlc_') ?: array();
+    	$shares1_local = array_merge($shares1_local, $shares1);
+    	//
 
     	//updating local options
-    	update_option('smdlc_freezes', $frezees_local);
-    	update_option('smdlc_shares', $shares_local);
+    	update_option('smdlc_', $shares1_local);
 
     	smdlc_update_overwrites();
     }

@@ -38,7 +38,7 @@ class SMDLC_Metadata_Lifecycle{
 	 * @access   public
 	 */
 	public static $lifecycle_properties = array(
-        
+
         'version'=>array( 'Version','Version or edition of described content')
 	);
 
@@ -46,7 +46,7 @@ class SMDLC_Metadata_Lifecycle{
 
 		$this->groupId = 'life_vocab';
 		$this->type_level = $typeLevelInput;
-		
+
 		$this->smdlc_add_metabox( $this->type_level );
 	}
 
@@ -58,7 +58,7 @@ class SMDLC_Metadata_Lifecycle{
 
 		//Getting the origin for overwritten data
         $dataFrom = is_plugin_active('pressbooks/pressbooks.php') ? 'Book-Info' : 'Site-Meta';
-      
+
 	    //getting value of post meta
         $meta_value = $label = get_post_meta($post->ID, $field_slug, true);
 
@@ -77,6 +77,29 @@ class SMDLC_Metadata_Lifecycle{
         <p><strong><?=$property?></strong> is overwritten by <?=$dataFrom?>. The value is"<?=$label?>"</p>
         <input type="hidden" name="<?=$field_slug?>" value="<?=$meta_value?>" />
         <?php
+	}
+
+	public function render_disable_field ($field_slug, $field, $value) {
+		global $post;
+
+		//Getting the origin for overwritten data
+				$dataFrom = is_plugin_active('pressbooks/pressbooks.php') ? 'Book-Info' : 'Site-Meta';
+
+			//getting value of post meta
+				$meta_value = $label = get_post_meta($post->ID, $field_slug, true);
+
+				//gettign porperty name from field name
+				$property = explode('_', $field_slug)[1];
+
+				//getting label of this property
+				foreach (self::$lifecycle_properties as $key => $value) {
+					if (strtolower($key) == $property){
+						$property = $value[0];
+					}
+				}
+		?>
+				<p> </p>
+				<?php
 	}
 
 	/**
@@ -98,12 +121,24 @@ class SMDLC_Metadata_Lifecycle{
 		foreach ( self::$lifecycle_properties as $property => $details ) {
 
 			$callback = null;
+			$freezes = [];
+			$disable = [];
 
-			$freezes = get_option('smdlc_freezes');
+			$freezesS = get_option('smdlc_');
+			foreach ((array) $freezesS as $key => $value) {
+				if ($value=='3') {
+					$freezes[$key] = '1';
+				}
+				if ($value=='1') {
+					$disable[$key] = '1';
+				}
+			}
 			if ($meta_position != 'site-meta' && $meta_position!= 'metadata' && isset($freezes[$property]) && $freezes[$property]){
 				$callback = 'render_frozen_field';
 			}
-
+			if ($meta_position != 'site-meta' && $meta_position!= 'metadata' && isset($disable[$property]) && $disable[$property]){
+				$callback = 'render_disable_field';
+			}
 
 			$fieldId = strtolower('smdlc_' . $property . '_' .$this->groupId. '_' .$meta_position);
 			//Checking if we need a dropdown field
@@ -231,10 +266,10 @@ class SMDLC_Metadata_Lifecycle{
 			//Constructing the key for the data
 			//Add strtolower in all vocabs remember
 			$dataKey = strtolower('smdlc_' . $key . '_' . $this->groupId .'_'. $this->type_level);
-			
+
 			//Getting the data
 			$val = $this->smdlc_get_value($dataKey);
-			
+
 			//Checking if the value exists and that the key is in the array for the schema
 			if(empty($val) || $val == '--Select--'){
 				continue;
