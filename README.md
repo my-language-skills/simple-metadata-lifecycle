@@ -6,7 +6,7 @@
 * Requires at least: 4.9.6
 * Tested up to: 4.9.8
 * Requires PHP: 7.0
-* Stable tag: 1.0
+* Stable tag: 1.1
 * License: GNU 3.0
 * License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -34,6 +34,10 @@ The Simple Metadata Life Cycle plugin is supplied "as is" and all use is at your
 
 ## Changelog
 Take a look at detailed changelog [here](/doc/CHANGELOG.md)
+### 1.1
+* **REMOVED**
+    *  Auto update from github
+    
 ### 1.0
 * Initial release
 * Version property created
