@@ -21,18 +21,15 @@ function smdlc_add_network_settings() {
 
     //registering settings
     register_setting('smdlc_network_meta_locations', 'smdlc_net_locations');
-	register_setting ('smdlc_network_meta_properties', 'smdlc_net_shares');
+	register_setting ('smdlc_network_meta_properties', 'smdlc_net_');
 	register_setting ('smdlc_network_meta_properties', 'smdlc_net_freezes');
-  register_setting ('smdlc_network_meta_properties', 'smdlc_net_');
 
 
 	// getting options values from DB
 	$post_types = smd_get_all_post_types();
 	$locations = get_option('smdlc_net_locations');
-	$shares = get_option('smdlc_net_shares');
+	$shares11 = get_option('smdlc_net_');
 	$freezes = get_option('smdlc_net_freezes');
-  $shares1 = get_option('smdlc_net_');
-
 
 	//adding settings for locations
 	foreach ($post_types as $post_type) {
@@ -50,21 +47,20 @@ function smdlc_add_network_settings() {
 	}
 
 	//adding settings for educational properties management
-	foreach (lifecycle_meta::$lifecycle_properties as $key => $data) {
-		add_settings_field ('smdlc_net_'.$key, ucfirst($data[0]), function () use ($key, $data, $shares, $freezes){
-      $shares1[$key] = !empty($shares1[$key]) ? $shares1[$key] : '0';
+  foreach (lifecycle_meta::$lifecycle_properties as $key => $data) {
+		add_settings_field ('smdlc_net_'.$key, ucfirst($data[0]), function () use ($key, $data, $shares11, $freezes){
+      $shares11[$key] = !empty($shares11[$key]) ? $shares11[$key] : '0';
 
 			?>
-      <label for="smdlc_net_disable[<?=$key?>]">Disable <input type="radio"  name="smdlc_net_[<?=$key?>]" value="1" id="smdlc_net_disable[<?=$key?>]" <?php if ($shares1[$key]=='1') { echo "checked='checked'"; }
+      <label for="smdlc_net_disable[<?=$key?>]">Disable <input type="radio"  name="smdlc_net_[<?=$key?>]" value="1" id="smdlc_net_disable[<?=$key?>]" <?php if ($shares11[$key]=='1') { echo "checked='checked'"; }
       ?>  ></label>
-      <label for="smdlc_net_local_value[<?=$key?>]">Local value <input type="radio"  name="smdlc_net_[<?=$key?>]" value="0" id="smdlc_net_local_value[<?=$key?>]" <?php if ($shares1[$key]=='0' ) { echo "checked='checked'"; }
+      <label for="smdlc_net_local_value[<?=$key?>]">Local value <input type="radio"  name="smdlc_net_[<?=$key?>]" value="0" id="smdlc_net_local_value[<?=$key?>]" <?php if ($shares11[$key]=='0' ) { echo "checked='checked'"; }
       ?>  ></label>
-      <label  for="smdlc_net_share[<?=$key?>]">Share <input type="radio"  name="smdlc_net_[<?=$key?>]" value="2" id="smdlc_net_share[<?=$key?>]" <?php if ($shares1[$key]=='2') { echo "checked='checked'"; }
+      <label  for="smdlc_net_share[<?=$key?>]">Share <input type="radio"  name="smdlc_net_[<?=$key?>]" value="2" id="smdlc_net_share[<?=$key?>]" <?php if ($shares11[$key]=='2') { echo "checked='checked'"; }
       ?>  ></label>
-      <label for="smdlc_net_freeze[<?=$key?>]">Freeze <input type="radio"  name="smdlc_net_[<?=$key?>]" value="3" id="smdlc_net_freeze[<?=$key?>]"  <?php if ($shares1[$key]=='3') { echo "checked='checked'"; }
+      <label for="smdlc_net_freeze[<?=$key?>]">Freeze <input type="radio"  name="smdlc_net_[<?=$key?>]" value="3" id="smdlc_net_freeze[<?=$key?>]"  <?php if ($shares11[$key]=='3') { echo "checked='checked'"; }
       ?> ></label>
-        <br><span class="description"><?=$data[1]?></span>
-
+				<br><span class="description"><?=$data[1]?></span>
 			<?php
 		}, 'smdlc_network_meta_properties', 'smdlc_network_meta_properties');
 	}
@@ -110,7 +106,7 @@ function smdlc_render_network_settings(){
 function smdlc_network_render_metabox_schema_locations(){
 	?>
 	<div id="smdlc_network_meta_locations" class="smdlc_network_meta_locations">
-		<span class="description">Description for lifecycle network locations metabox</span>
+		<span class="description">Description for Life Cycle network locations metabox</span>
 		<form method="post" action="edit.php?action=smdlc_update_network_locations">
 			<?php
 			settings_fields( 'smdlc_network_meta_locations' );
@@ -129,7 +125,7 @@ function smdlc_network_render_metabox_schema_locations(){
 function smdlc_network_render_metabox_properties(){
 	?>
 	<div id="smdlc_network_meta_properties" class="smdlc_network_meta_properties">
-		<span class="description">Description for lifecycle network properties metabox</span>
+		<span class="description">Description for Life Cycle network properties metabox</span>
 		<form method="post" action="edit.php?action=smdlc_update_network_options">
 			<?php
 			settings_fields( 'smdlc_network_meta_properties' );
@@ -211,12 +207,15 @@ function smdlc_update_network_options() {
 
 	//Wordpress Database variable for database operations
     global $wpdb;
-    $shares1 = isset($_POST['smdlc_net_']) ? $_POST['smdlc_net_'] : array();
+
     //collecting network options values from request
+
+    $shares11 = isset($_POST['smdlc_net_']) ? $_POST['smdlc_net_'] : array();
     //if property is frozen, it's automatically shared
 
+
     //updating network options in DB
-    update_blog_option(1, 'smdlc_net_', $shares1);
+	update_blog_option(1, 'smdlc_net_', $shares11);
 
 	//Grabbing all the site IDs
     $siteids = $wpdb->get_col("SELECT blog_id FROM $wpdb->blogs");
@@ -232,12 +231,12 @@ function smdlc_update_network_options() {
 
     	//> we merge values received from network settings with local values of every blog
 
-    	$shares1_local = get_option('smdlc_') ?: array();
-    	$shares1_local = array_merge($shares1_local, $shares1);
-    	//
+    	$shares11_local = get_option('smdlc_') ?: array();
+    	$shares11_local = array_merge($shares11_local, $shares11);
+    	//<
 
     	//updating local options
-    	update_option('smdlc_', $shares1_local);
+    	update_option('smdlc_', $shares11_local);
 
     	smdlc_update_overwrites();
     }
@@ -252,6 +251,6 @@ function smdlc_update_network_options() {
 }
 
 
-add_action( 'network_admin_menu', 'smdlc_add_network_settings', 1001); //third parameter means priority, bigger => later executed hooked function
+add_action( 'network_admin_menu', 'smdlc_add_network_settings', 1000); //third parameter means priority, bigger => later executed hooked function
 add_action( 'network_admin_edit_smdlc_update_network_locations', 'smdlc_update_network_locations');
 add_action( 'network_admin_edit_smdlc_update_network_options', 'smdlc_update_network_options');

@@ -28,33 +28,31 @@ function smdlc_add_lyfecycle_settings() {
 
 		//registering settings for locations and properties management
 		register_setting('smdlc_meta_locations', 'smdlc_locations');
-
 		register_setting ('smdlc_meta_properties', 'smdlc_shares');
 
-		register_setting ('smdlc_meta_properties', 'smdlc_freezes');
-
 		register_setting ('smdlc_meta_properties', 'smdlc_');
+
+		register_setting ('smdlc_meta_properties', 'smdlc_freezes');
 
 
 		//collecting current values of options
 		$post_types = smd_get_all_post_types();
 		$locations = get_option('smdlc_locations');
 		$shares = get_option('smdlc_shares');
+		$shares11 = get_option('smdlc_');
 		$freezes = get_option('smdlc_freezes');
-		$shares1 = get_option('smdlc_');
 
 		//initiazaling variables for network values
 		$network_locations = [];
 		$network_shares = [];
-		$network_freezes = [];
-		$network_shares1 = [];
 
+		$network_shares11 = [];
+		$network_freezes = [];
 		//in case of multisite installation, we collect options for network
 		if (is_multisite()){
 			$network_locations = get_blog_option(1, 'smdlc_net_locations');
 			$network_shares = get_blog_option(1, 'smdlc_net_shares');
-			$network_shares1 = get_blog_option(1, 'smdlc_net_');
-
+			$network_shares11 = get_blog_option(1, 'smdlc_net_');
 			$network_freezes = get_blog_option(1, 'smdlc_net_freezes');
 		}
 
@@ -79,43 +77,45 @@ function smdlc_add_lyfecycle_settings() {
 			}, 'smdlc_meta_locations', 'smdlc_meta_locations');
 		}
 
-		//creating fields for every property in lifecycle vocabulary
+		//creating fields for every property in Life Cycle vocabulary
 		foreach (lifecycle_meta::$lifecycle_properties as $key => $data) {
 
-			add_settings_field ('smdlc_'.$key, ucfirst($data[0]), function () use ($key, $data, $shares1, $freezes, $network_shares1, $network_freezes){
-				if (!empty($network_shares1)) {
-					if ($network_shares1[$key] == '0') {
-						$shares1 = get_option('smdlc_');
-					// $shares1_class[$key] == '0';
+			add_settings_field ('smdlc_'.$key, ucfirst($data[0]), function () use ($key, $data, $shares11, $freezes, $network_shares11, $network_freezes){
+				if (!empty($network_shares11)) {
+					if ($network_shares11[$key] == '0') {
+						$shares11 = get_option('smdlc_');
+					// $shares11_class[$key] == '0';
 					 $valeur_key_lifecycle = '4';
 
 					}
 					else {
-						$shares1[$key] = $network_shares1[$key];
-						 $valeur_key_lifecycle = $shares1[$key];
+						$shares11[$key] = $network_shares11[$key];
+						 $valeur_key_lifecycle = $shares11[$key];
 					}
 				}else
 				 {
 					$disabled_ca = '';
+					$valeur_key_lifecycle = '4';
+
 				}
 				?>
-				<label for="smdlc_disable[<?=$key?>]">Disable <input type="radio"  name="smdlc_[<?=$key?>]" value="1" id="smdlc_disable[<?=$key?>]" <?php if ($shares1[$key]=='1') { echo "checked='checked'"; }
+				<label for="smdlc_disable[<?=$key?>]">Disable <input type="radio"  name="smdlc_[<?=$key?>]" value="1" id="smdlc_disable[<?=$key?>]" <?php if ($shares11[$key]=='1') { echo "checked='checked'"; }
 				?>  <?php  if ($valeur_key_lifecycle == '1' || $valeur_key_lifecycle == '4') {echo "";}else {echo "disabled";}  ?> ></label>
-				<label for="smdlc_local_value[<?=$key?>]">Local value <input type="radio"  name="smdlc_[<?=$key?>]" value="0" id="smdlc_local_value[<?=$key?>]" <?php if ($shares1[$key]=='0' || empty($shares1[$key])) { echo "checked='checked'"; }
+				<label for="smdlc_local_value[<?=$key?>]">Local value <input type="radio"  name="smdlc_[<?=$key?>]" value="0" id="smdlc_local_value[<?=$key?>]" <?php if ($shares11[$key]=='0' || empty($shares11[$key])) { echo "checked='checked'"; }
 				?>  <?php  if ($valeur_key_lifecycle == '0' || $valeur_key_lifecycle == '4') {echo "";}else {echo "disabled";}  ?>></label>
-				<label  for="smdlc_share[<?=$key?>]">Share <input type="radio"  name="smdlc_[<?=$key?>]" value="2" id="smdlc_share[<?=$key?>]" <?php if ($shares1[$key]=='2') { echo "checked='checked'"; }
+				<label  for="smdlc_share[<?=$key?>]">Share <input type="radio"  name="smdlc_[<?=$key?>]" value="2" id="smdlc_share[<?=$key?>]" <?php if ($shares11[$key]=='2') { echo "checked='checked'"; }
 				?>  <?php  if ($valeur_key_lifecycle == '2' || $valeur_key_lifecycle == '4') {echo "";}else {echo "disabled";}  ?>></label>
-				<label for="smdlc_freeze[<?=$key?>]">Freeze <input type="radio"  name="smdlc_[<?=$key?>]" value="3" id="smdlc_freeze[<?=$key?>]"  <?php if ($shares1[$key]=='3') { echo "checked='checked'"; }
+				<label for="smdlc_freeze[<?=$key?>]">Freeze <input type="radio"  name="smdlc_[<?=$key?>]" value="3" id="smdlc_freeze[<?=$key?>]"  <?php if ($shares11[$key]=='3') { echo "checked='checked'"; }
 				?> <?php  if ($valeur_key_lifecycle == '3' || $valeur_key_lifecycle == '4') {echo "";}else {echo "disabled";}  ?>></label>
 					<br><span class="description"><?=$data[1]?></span>
-				<?php
-
+					<?php
 
 			}, 'smdlc_meta_properties', 'smdlc_meta_properties');
-
-		}
-	}
 }
+		}
+		}
+
+
 
 /**
  * Function for rendering settings subpage
@@ -135,7 +135,7 @@ function smdlc_render_settings() {
 				<p><strong>Settings saved.</strong></p>
 			</div>
 			<?php smdlc_update_overwrites(); }?>
-            <h2>Simple Metadata Life Cycle Settings</h2>
+			<h2>Simple Metadata Life Cycle Settings</h2>
             <div class="metabox-holder">
 					<?php
 					do_meta_boxes('smdlc_set_page', 'normal','');
@@ -161,7 +161,7 @@ function smdlc_render_settings() {
 function smdlc_render_metabox_schema_locations(){
 	?>
 	<div id="smdlc_meta_locations" class="smdlc_meta_locations">
-		<span class="description">Description for lifecycle locations metabox</span>
+		<span class="description">Description for Life Cycle locations metabox</span>
 		<form method="post" action="options.php">
 			<?php
 			settings_fields( 'smdlc_meta_locations' );
@@ -175,7 +175,7 @@ function smdlc_render_metabox_schema_locations(){
 }
 
 /**
- * Function for rendering 'lifecycle properties' metabox
+ * Function for rendering 'Life Cycle properties' metabox
  */
 function smdlc_render_metabox_properties(){
 	$locations = get_option('smdlc_locations');
@@ -184,7 +184,7 @@ function smdlc_render_metabox_properties(){
 	if (isset($locations[$level]) && $locations[$level]){
 	?>
 	<div id="smdlc_meta_properties" class="smdlc_meta_properties">
-		<span class="description">Description for lifecycle properties metabox</span>
+		<span class="description">Description for Life Cycle properties metabox</span>
 		<form method="post" action="options.php">
 			<?php
 			settings_fields( 'smdlc_meta_properties' );
@@ -205,124 +205,125 @@ function smdlc_render_metabox_properties(){
 /**
  * Function for updating options and forcing overwritings on settings update
  */
-function smdlc_update_overwrites(){
+ function smdlc_update_overwrites(){
 
-	//collecting options values
-	$locations = get_option('smdlc_locations') ?: [];
-	$shares1 = get_option('smdlc_') ?: [];
-	$freezes = get_option('smdlc_freezes') ?: [];
+ 	//collecting options values
+ 	$locations = get_option('smdlc_locations') ?: [];
+ 	$shares11 = get_option('smdlc_') ?: [];
+ 	$freezes = get_option('smdlc_freezes') ?: [];
 
-	//if nothing is chosen to share or freeze, return
-	if(empty($shares1) && empty($freezes)){
-		return;
-	}
+ 	//if nothing is chosen to share or freeze, return
+ 	if(empty($shares11) && empty($freezes)){
+ 		return;
+ 	}
 
-	//Wordpress Database variable for database operations
-	global $wpdb;
-    //Get the posts table name
-    $postsTable = $wpdb->prefix . "posts";
-    //Get the postmeta table name
-    $postMetaTable = $wpdb->prefix . "postmeta";
+ 	//Wordpress Database variable for database operations
+ 	global $wpdb;
+     //Get the posts table name
+     $postsTable = $wpdb->prefix . "posts";
+     //Get the postmeta table name
+     $postMetaTable = $wpdb->prefix . "postmeta";
 
-    //defining site-meta post type
-    $meta_type = is_plugin_active('pressbooks/pressbooks.php') ? 'metadata' : 'site-meta';
+     //defining site-meta post type
+     $meta_type = is_plugin_active('pressbooks/pressbooks.php') ? 'metadata' : 'site-meta';
 
-    //fetching site-meta/book info post
-    $meta_post = $wpdb->get_results($wpdb->prepare("
-        SELECT ID FROM $postsTable WHERE post_type LIKE %s AND
-        post_status LIKE %s",$meta_type,'publish'),ARRAY_A);
+     //fetching site-meta/book info post
+     $meta_post = $wpdb->get_results($wpdb->prepare("
+         SELECT ID FROM $postsTable WHERE post_type LIKE %s AND
+         post_status LIKE %s",$meta_type,'publish'),ARRAY_A);
 
-    //If we have more than one or 0 ids in the array then return and stop operation
-    //If we have no chapters or posts to distribute data also stop operation
-    if(count($meta_post) > 1 || count($meta_post) == 0){
-        return;
-    }
+     //If we have more than one or 0 ids in the array then return and stop operation
+     //If we have no chapters or posts to distribute data also stop operation
+     if(count($meta_post) > 1 || count($meta_post) == 0){
+         return;
+     }
 
-    //unwrapping ID from subarrays
-    $meta_post_id = $meta_post[0]['ID'];
+     //unwrapping ID from subarrays
+     $meta_post_id = $meta_post[0]['ID'];
 
 
-    //getting metadata of site-meta/books info post
-    $meta_post_meta = $wpdb->get_results($wpdb->prepare("
-        SELECT `meta_key`, `meta_value` FROM $postMetaTable WHERE `post_id` LIKE %s
-        AND `meta_key` LIKE %s AND `meta_key` LIKE %s
-        AND `meta_value` <>''",$meta_post_id,'%%smdlc_%%','%%_vocab%%'.$meta_type.'%%')
-            ,ARRAY_A);
+     //getting metadata of site-meta/books info post
+     $meta_post_meta = $wpdb->get_results($wpdb->prepare("
+         SELECT `meta_key`, `meta_value` FROM $postMetaTable WHERE `post_id` LIKE %s
+         AND `meta_key` LIKE %s AND `meta_key` LIKE %s
+         AND `meta_value` <>''",$meta_post_id,'%%smdlc_%%','%%_vocab%%'.$meta_type.'%%')
+             ,ARRAY_A);
 
- 	//Array for storing metakey=>metavalue
-    $metaData = [];
-    //unwrapping data from subarrays
-    foreach($meta_post_meta as $meta){
-        $metaData[$meta['meta_key']] = $meta['meta_value'];
-    }
-    //if there are no fields of lifecycle meta in site-meta/ book info, nothing to share or freeze, exit
-    if(count($metaData) == 0){
-        return;
-    }
+  	//Array for storing metakey=>metavalue
+     $metaData = [];
+     //unwrapping data from subarrays
+     foreach($meta_post_meta as $meta){
+         $metaData[$meta['meta_key']] = $meta['meta_value'];
+     }
+     //if there are no fields of Life Cycle meta in site-meta/ book info, nothing to share or freeze, exit
+     if(count($metaData) == 0){
+         return;
+     }
 
-    //checking if there is somthing to share for lifecycle properties
-	if(!empty($shares1)){
+     //checking if there is somthing to share for Life Cycle properties
+		 if(!empty($shares11)){
 
-		//looping through all active locations
-		foreach ($shares1 as $key => $value) {
-		if ($value=='2') {
-		foreach ($locations as $location => $val){
-			if ($location == $meta_type) {
-				continue;
-			}
-        	//Getting all posts of $location type
-        	$posts_ids = $wpdb->get_results($wpdb->prepare("
-        	SELECT `ID` FROM `$postsTable` WHERE `post_type` = %s",$location),ARRAY_A);
+	  		//looping through all active locations
+	  		foreach ($shares11 as $key => $value) {
+	  		if ($value=='2') {
+	  		foreach ($locations as $location => $val){
+	  			if ($location == $meta_type) {
+	  				continue;
+	  			}
+	          	//Getting all posts of $location type
+	          	$posts_ids = $wpdb->get_results($wpdb->prepare("
+	          	SELECT `ID` FROM `$postsTable` WHERE `post_type` = %s",$location),ARRAY_A);
 
-        	//looping through all posts of type $locations
-        	foreach ($posts_ids as $post_id) {
-        		$post_id = $post_id['ID'];
+	          	//looping through all posts of type $locations
+	          	foreach ($posts_ids as $post_id) {
+	          		$post_id = $post_id['ID'];
 
-        		foreach ($shares1 as $key => $value) {
-							if ($value=='2') {
-        			$meta_key = 'smdlc_'.strtolower($key).'_life_vocab_'.$location;
-        			$metadata_meta_key = 'smdlc_'.strtolower($key).'_life_vocab_'.$meta_type;
-        			if((!get_post_meta($post_id, $meta_key) || '' == get_post_meta($post_id, $meta_key)) && isset($metaData[$metadata_meta_key])){
-        				update_post_meta($post_id, $meta_key, $metaData[$metadata_meta_key]);
-        			}
-								}
-        		}
-        	}
-					}
-				}
-			if ($value=='3') {
-				foreach ($locations as $location => $val){
-					if ($location == $meta_type) {
-						continue;
-					}
-		        	//Getting all posts of $location type
-		        	$posts_ids = $wpdb->get_results($wpdb->prepare("
-		        	SELECT `ID` FROM `$postsTable` WHERE `post_type` = %s",$location),ARRAY_A);
+	          		foreach ($shares11 as $key => $value) {
+									if ($value=='2') {
+	          			$meta_key = 'smdlc_'.strtolower($key).'_lifecycle_'.$location;
+	          			$metadata_meta_key = 'smdlc_'.strtolower($key).'_lifecycle_'.$meta_type;
+	          			if((!get_post_meta($post_id, $meta_key) || '' == get_post_meta($post_id, $meta_key)) && isset($metaData[$metadata_meta_key])){
+	          				update_post_meta($post_id, $meta_key, $metaData[$metadata_meta_key]);
+	          			}
+											}
+	          		}
+	          	}
+	  					}
+	  				}
+	  			if ($value=='3') {
+	  				foreach ($locations as $location => $val){
+	  					if ($location == $meta_type) {
+	  						continue;
+	  					}
+	  		        	//Getting all posts of $location type
+	  		        	$posts_ids = $wpdb->get_results($wpdb->prepare("
+	  		        	SELECT `ID` FROM `$postsTable` WHERE `post_type` = %s",$location),ARRAY_A);
 
-		        	//looping through all posts of type $locations
-		        	foreach ($posts_ids as $post_id) {
-		        		$post_id = $post_id['ID'];
+	  		        	//looping through all posts of type $locations
+	  		        	foreach ($posts_ids as $post_id) {
+	  		        		$post_id = $post_id['ID'];
 
-		        		foreach ($shares1 as $key => $value) {
-									if ($value=='3') {
-		        			$meta_key = 'smdlc_'.strtolower($key).'_life_vocab_'.$location;
-		        			$metadata_meta_key = 'smdlc_'.strtolower($key).'_life_vocab_'.$meta_type;
-		        			if(isset($metaData[$metadata_meta_key])){
-		        				update_post_meta($post_id, $meta_key, $metaData[$metadata_meta_key]);
-		        			}
-									}
-		        		}
-		        	}
+	  		        		foreach ($shares11 as $key => $value) {
+											if ($value=='3') {
+	  		        			$meta_key = 'smdlc_'.strtolower($key).'_lifecycle_'.$location;
+	  		        			$metadata_meta_key = 'smdlc_'.strtolower($key).'_lifecycle_'.$meta_type;
+	  		        			if(isset($metaData[$metadata_meta_key])){
+	  		        				update_post_meta($post_id, $meta_key, $metaData[$metadata_meta_key]);
+	  		        			}
+												}
+	  		        		}
+	  		        	}
 
-				}
-			}
-		}
-	}
-}
+	  				}
+	  			}
+	  		}
+	  	}
+	  }
+
 
 add_action('admin_menu', 'smdlc_add_lyfecycle_settings', 100);
 add_action('updated_option', function( $option_name, $old_value, $value ){
-	if ('smdlc_locations' == $option_name){
+	if ('smde_locations' == $option_name){
 		$locations_general = get_option('smd_locations') ?: [];
 		$value = empty($value) ? [] : $value;
 		$locations_general = array_merge($locations_general, $value);

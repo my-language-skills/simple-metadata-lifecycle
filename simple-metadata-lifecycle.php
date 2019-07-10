@@ -4,7 +4,7 @@
 Plugin Name: Simple Metadata Life Cycle
 Plugin URI: https://github.com/my-language-skills/simple-metadata-lyfecycle
 Description: Simple Metadata add-on for life-cycle inforamtion of web-site content.
-Version: 1.1
+Version: 1.0
 Author: My Language Skills team
 Author URI: https://github.com/my-language-skills
 Text Domain: simple-metadata-lifecycle
