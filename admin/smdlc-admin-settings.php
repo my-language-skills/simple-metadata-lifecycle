@@ -8,7 +8,7 @@ use \vocabularies\SMDLC_Metadata_Lifecycle as lifecycle_meta;
 defined ("ABSPATH") or die ("No script assholes!");
 
 /**
- * Function to add plugin settings subpage and registering settings and their sections
+ * Function to add pluginx settings subpage and registering settings and their sections
  */
 function smdlc_add_lyfecycle_settings() {
 	//we don't create settings page in blog 1 (not necessary)
