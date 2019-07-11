@@ -1,16 +1,34 @@
 <?php
 
-/*
-Plugin Name: Simple Metadata Life Cycle
-Plugin URI: https://github.com/my-language-skills/simple-metadata-lyfecycle
-Description: Simple Metadata add-on for life-cycle inforamtion of web-site content.
-Version: 1.0
-Author: My Language Skills team
-Author URI: https://github.com/my-language-skills
-Text Domain: simple-metadata-lifecycle
-Domain Path: /languages
-License: GPL 3.0
-*/
+/**
+ * Simple Metadata - Life Cycle
+ *
+ * This file is read by WordPress to generate the plugin information in the plugin
+ * admin area. This file also includes all of the dependencies used by the plugin,
+ * registers the activation and deactivation functions, and defines a function
+ * that starts the plugin.
+ *
+ * @link              https://github.com/my-language-skills/simple-metadata-lifecycle
+ * @since             1.0
+ * @package           simple-metadata-lifecycle
+ *
+ * @wordpress-plugin
+ * Plugin Name:       Simple Metadata - Life Cycle
+ * Plugin URI:        https://github.com/my-language-skills/simple-metadata-lifecycle
+ * Description:       Simple Metadata add-on for life-cycle inforamtion of web-site content.
+ * Version:           1.0
+ * Author:            My Language Skills team
+ * Author URI:        https://github.com/my-language-skills/
+ * License:           GPL 3.0
+ * License URI:       http://www.gnu.org/licenses/gpl-3.0.txt
+ * Text Domain:       simple-metadata-lifecycle
+ * Domain Path:       /languages
+ */
+
+
+
+
+
 
 defined ("ABSPATH") or die ("No script assholes!");
 
