@@ -1,5 +1,17 @@
 <?php
 
+/**
+ * Summary (no period for file headers)
+ *
+ * Description. (use period)
+ *
+ * @link URL
+ *
+ * @package simple-metadata-lifecycle
+ * @subpackage XXXXXX/XXXXXX
+ * @since x.x.x (when the file was introduced)
+ */
+
 // If uninstall not called from WordPress, then exit.
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;

@@ -1,5 +1,17 @@
 <?php
 
+/**
+ * Summary (no period for file headers)
+ *
+ * Description. (use period)
+ *
+ * @link URL
+ *
+ * @package simple-metadata-lifecycle
+ * @subpackage XXXXXX/XXXXXX
+ * @since x.x.x (when the file was introduced)
+ */
+ 
 use \vocabularies\SMDLC_Metadata_Lifecycle as lifecycle_meta;
 
 
@@ -8,8 +20,12 @@ use \vocabularies\SMDLC_Metadata_Lifecycle as lifecycle_meta;
 defined ("ABSPATH") or die ("No script assholes!");
 
 /**
- * Function to add pluginx settings subpage and registering settings and their sections
- */
+* Function to add pluginx settings subpage and registering settings and their sections.
+*
+* @since
+*
+*/
+
 function smdlc_add_lyfecycle_settings() {
 	//we don't create settings page in blog 1 (not necessary)
 	if ((1 != get_current_blog_id() && is_multisite()) || !is_multisite()){
@@ -115,11 +131,13 @@ function smdlc_add_lyfecycle_settings() {
 		}
 		}
 
-
-
 /**
- * Function for rendering settings subpage
- */
+* Function for rendering settings subpage.
+*
+* @since
+*
+*/
+
 function smdlc_render_settings() {
 	if(!current_user_can('manage_options')){
 		return;
@@ -156,8 +174,12 @@ function smdlc_render_settings() {
 }
 
 /**
- * Function for rendering 'Locations' metabox
- */
+* Function for rendering 'Locations' metabox.
+*
+* @since
+*
+*/
+
 function smdlc_render_metabox_schema_locations(){
 	?>
 	<div id="smdlc_meta_locations" class="smdlc_meta_locations">
@@ -175,8 +197,12 @@ function smdlc_render_metabox_schema_locations(){
 }
 
 /**
- * Function for rendering 'Life Cycle properties' metabox
- */
+* Function for rendering 'Life Cycle properties' metabox
+*
+* @since
+*
+*/
+
 function smdlc_render_metabox_properties(){
 	$locations = get_option('smdlc_locations');
 	$level = is_plugin_active('pressbooks/pressbooks.php') ? 'metadata' : 'site-meta';
@@ -203,8 +229,12 @@ function smdlc_render_metabox_properties(){
 }
 
 /**
- * Function for updating options and forcing overwritings on settings update
- */
+* Function for updating options and forcing overwritings on settings update.
+*
+* @since
+*
+*/
+
  function smdlc_update_overwrites(){
 
  	//collecting options values
