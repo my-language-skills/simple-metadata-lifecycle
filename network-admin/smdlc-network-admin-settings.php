@@ -1,18 +1,18 @@
 <?php
 
 /**
- * Summary (no period for file headers)
+ * Network settings functionality
  *
  * Description. (use period)
  *
  * @link URL
  *
  * @package simple-metadata-lifecycle
- * @subpackage XXXXXX/XXXXXX
+ * @subpackage network-admin/settings
  * @since x.x.x (when the file was introduced)
  */
- 
-//network settings functionality
+
+/
 
 use \vocabularies\SMDLC_Metadata_Lifecycle as lifecycle_meta;
 

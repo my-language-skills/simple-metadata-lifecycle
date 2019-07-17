@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Summary (no period for file headers)
+ * Unistall plugin
  *
  * Description. (use period)
  *

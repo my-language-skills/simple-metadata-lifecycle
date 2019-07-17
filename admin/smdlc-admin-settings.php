@@ -1,21 +1,19 @@
 <?php
 
 /**
- * Summary (no period for file headers)
+ * Creats settings subpage for Simple Metadata
  *
  * Description. (use period)
  *
  * @link URL
  *
  * @package simple-metadata-lifecycle
- * @subpackage XXXXXX/XXXXXX
+ * @subpackage admin/settings
  * @since x.x.x (when the file was introduced)
  */
- 
+
 use \vocabularies\SMDLC_Metadata_Lifecycle as lifecycle_meta;
 
-
-//Creating settings subpage for Simple Metadata
 
 defined ("ABSPATH") or die ("No script assholes!");
 

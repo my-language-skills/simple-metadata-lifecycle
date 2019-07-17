@@ -1,18 +1,16 @@
 <?php
 
 /**
- * Summary (no period for file headers)
+ * Functionality for printing metatags
  *
  * Description. (use period)
  *
  * @link URL
  *
  * @package simple-metadata-lifecycle
- * @subpackage XXXXXX/XXXXXX
+ * @subpackage admin/output
  * @since x.x.x (when the file was introduced)
  */
-
-//functionality for printing metatags
 
 use \vocabularies\SMDLC_Metadata_Lifecycle as lifecycle_meta;
 

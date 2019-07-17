@@ -1,18 +1,16 @@
 <?php
 
 /**
- * Summary (no period for file headers)
+ * Creates metaboxes for educational metadata
  *
  * Description. (use period)
  *
  * @link URL
  *
  * @package simple-metadata-lifecycle
- * @subpackage XXXXXX/XXXXXX
+ * @subpackage admin/init/metaboxes
  * @since x.x.x (when the file was introduced)
  */
- 
-//creating metaboxes for educational metadata
 
 use \vocabularies\SMDLC_Metadata_Lifecycle as lifecycle_meta;
 

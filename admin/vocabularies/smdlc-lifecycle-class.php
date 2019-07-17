@@ -8,7 +8,7 @@
  * @link URL
  *
  * @package simple-metadata-lifecycle
- * @subpackage XXXXXX/XXXXXX
+ * @subpackage classes
  * @since x.x.x (when the file was introduced)
  */
 
