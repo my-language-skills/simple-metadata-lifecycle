@@ -12,7 +12,6 @@
  * @since x.x.x (when the file was introduced)
  */
 
-/
 
 use \vocabularies\SMDLC_Metadata_Lifecycle as lifecycle_meta;
 
