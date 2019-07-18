@@ -129,7 +129,7 @@ function smdlc_render_network_settings(){
 function smdlc_network_render_metabox_schema_locations(){
 	?>
 	<div id="smdlc_network_meta_locations" class="smdlc_network_meta_locations">
-		<span class="description">Description for Life Cycle network locations metabox</span>
+		<span class="description">Activate the public post types where metadata will be available.<br>If selected, site administrators can not modify.</span>
 		<form method="post" action="edit.php?action=smdlc_update_network_locations">
 			<?php
 			settings_fields( 'smdlc_network_meta_locations' );
@@ -152,7 +152,7 @@ function smdlc_network_render_metabox_schema_locations(){
 function smdlc_network_render_metabox_properties(){
 	?>
 	<div id="smdlc_network_meta_properties" class="smdlc_network_meta_properties">
-		<span class="description">Description for Life Cycle network properties metabox</span>
+		<span class="description">Control of the properties over the subsites.</span>
 		<form method="post" action="edit.php?action=smdlc_update_network_options">
 			<?php
 			settings_fields( 'smdlc_network_meta_properties' );
