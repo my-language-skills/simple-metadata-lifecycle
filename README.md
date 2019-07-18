@@ -4,11 +4,12 @@
 * Donate link: https://opencollective.com/mylanguageskills
 * Tags: pressbooks,, metadata, lifecycle, version
 * Requires at least: 4.9.6
-* Tested up to: 4.9.8
+* Tested up to: 5.2.2
 * Requires PHP: 7.0
 * Stable tag: 1.1
 * License: GNU 3.0
 * License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
+* Gutenberg: compatible
 
 ## Description
 This addon describes the history and current state of this content and those entities that have affected this content during its evolution.
@@ -37,7 +38,7 @@ Take a look at detailed changelog [here](/doc/CHANGELOG.md)
 ### 1.1
 * **REMOVED**
     *  Auto update from github
-    
+
 ### 1.0
 * Initial release
 * Version property created

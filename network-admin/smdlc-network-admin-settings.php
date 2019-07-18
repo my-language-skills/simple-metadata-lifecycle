@@ -1,14 +1,29 @@
 <?php
 
-//network settings functionality
+/**
+ * Network settings functionality
+ *
+ * Description. (use period)
+ *
+ * @link URL
+ *
+ * @package simple-metadata-lifecycle
+ * @subpackage network-admin/settings
+ * @since x.x.x (when the file was introduced)
+ */
+
 
 use \vocabularies\SMDLC_Metadata_Lifecycle as lifecycle_meta;
 
 defined ("ABSPATH") or die ("No script assholes!");
 
-/**v
- * Function for adding network settings page
- */
+/**
+* Function for adding network settings page.
+*
+* @since
+*
+*/
+
 function smdlc_add_network_settings() {
 
     //adding settings metaboxes and settigns sections
@@ -105,8 +120,12 @@ echo '<a style="color:red; text-decoration: none; font-size: 14px;"href = "admin
 }
 
 /**
- * Function for rendering settings page
- */
+* Function for rendering settings page.
+*
+* @since
+*
+*/
+
 function smdlc_render_network_settings(){
 	wp_enqueue_script('common');
 		wp_enqueue_script('wp-lists');
@@ -138,12 +157,16 @@ function smdlc_render_network_settings(){
 }
 
 /**
- * Function for rendering metabox of locations
- */
+* Function for rendering metabox of locations.
+*
+* @since
+*
+*/
+
 function smdlc_network_render_metabox_schema_locations(){
 	?>
 	<div id="smdlc_network_meta_locations" class="smdlc_network_meta_locations">
-		<span class="description">Description for Life Cycle network locations metabox</span>
+		<span class="description">Activate the public post types where metadata will be available.<br>If selected, site administrators can not modify.</span>
 		<form method="post" action="edit.php?action=smdlc_update_network_locations">
 			<?php
 			settings_fields( 'smdlc_network_meta_locations' );
@@ -157,12 +180,16 @@ function smdlc_network_render_metabox_schema_locations(){
 }
 
 /**
- * Function for rendering metabox for properties management
- */
+* Function for rendering metabox for properties management.
+*
+* @since
+*
+*/
+
 function smdlc_network_render_metabox_properties(){
 	?>
 	<div id="smdlc_network_meta_properties" class="smdlc_network_meta_properties">
-		<span class="description">Description for Life Cycle network properties metabox</span>
+		<span class="description">Control of the properties over the subsites.</span>
 		<form method="post" action="edit.php?action=smdlc_update_network_options">
 			<?php
 			settings_fields( 'smdlc_network_meta_properties' );
@@ -174,10 +201,13 @@ function smdlc_network_render_metabox_properties(){
 	</div>
 	<?php
 }
-
 /**
- * Handler for locations settings update
- */
+* Handler for locations settings update.
+*
+* @since
+*
+*/
+
 function smdlc_update_network_locations() {
 
 	check_admin_referer('smdlc_network_meta_locations-options');
@@ -236,8 +266,12 @@ function smdlc_update_network_locations() {
 }
 
 /**
- * Handler for properties settings update
- */
+* Handler for properties settings update.
+*
+* @since
+*
+*/
+
 function smdlc_update_network_options() {
 
 	check_admin_referer('smdlc_network_meta_properties-options');
