@@ -279,6 +279,37 @@ function smdlc_render_metabox_schema_locations(){
 			submit_button();
 			?>
 		</form>
+		<br>
+		<?php
+		function runMyFunction2() {
+			if (isset($_GET['field_name'])) {
+				$locations2 = get_option('smdlc_locations');
+				$key = $_GET['field_name'];
+					global $wpdb;
+						 //Get the posts table name
+						 $postsTable = $wpdb->prefix . "posts";
+						 var_dump($postsTable);
+
+						 //Get the postmeta table name
+						 $postMetaTable = $wpdb->prefix . "postmeta";
+
+						 //defining site-meta post type
+						 $meta_type = is_plugin_active('pressbooks/pressbooks.php') ? 'metadata' : 'site-meta';
+						 $metadata_meta_key_site = 'smdlc_';
+					 $recuperation_de_la_table = $wpdb->get_results("
+					 	DELETE FROM $postMetaTable  WHERE meta_key like '%{$metadata_meta_key_site}%' ");
+			}
+}
+		if (isset($_GET['hello3'])) {
+		runMyFunction2();
+		//refresh the page ?>
+		<meta http-equiv="refresh" content="0;URL=admin.php?page=smd_set_page">
+		 <?php
+		} ?>
+		<form class=""  method="post">
+			<tr><th scope="row">Delete all Data of the single sites</th><td > <?php  echo "<a <a onClick=\"javascript: return confirm('Are you sure to delete all meta-data of the plugin Lifeclycle in the site?');\" style='color:red; text-decoration: none; font-size: 14px;'href = 'admin.php?page=smd_set_page&hello3=true&field_name=patatevie&sharekey=onestla'>X</a>"; ?>
+				</td></tr>
+		</form>
 		<p></p>
 	</div>
 	<?php
@@ -442,7 +473,7 @@ function smdlc_render_metabox_properties(){
 
 add_action('admin_menu', 'smdlc_add_lyfecycle_settings', 100);
 add_action('updated_option', function( $option_name, $old_value, $value ){
-	if ('smde_locations' == $option_name){
+	if ('smdlc_locations' == $option_name){
 		$locations_general = get_option('smd_locations') ?: [];
 		$value = empty($value) ? [] : $value;
 		$locations_general = array_merge($locations_general, $value);
