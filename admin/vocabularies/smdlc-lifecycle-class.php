@@ -44,7 +44,7 @@ class SMDLC_Metadata_Lifecycle{
 
 	public function __construct($typeLevelInput) {
 
-		$this->groupId = 'life_vocab';
+		$this->groupId = 'lifecycle';
 		$this->type_level = $typeLevelInput;
 
 		$this->smdlc_add_metabox( $this->type_level );

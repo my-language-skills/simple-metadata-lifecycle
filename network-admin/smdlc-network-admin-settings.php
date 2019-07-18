@@ -50,8 +50,45 @@ function smdlc_add_network_settings() {
   foreach (lifecycle_meta::$lifecycle_properties as $key => $data) {
 		add_settings_field ('smdlc_net_'.$key, ucfirst($data[0]), function () use ($key, $data, $shares11, $freezes){
       $shares11[$key] = !empty($shares11[$key]) ? $shares11[$key] : '0';
+      ?>
+      <?php if ($shares11[$key]=='1') {
 
-			?>
+        function runMyFunction() {
+          if (isset($_GET['field_name'])) {
+            $key = $_GET['field_name'];
+
+              global $wpdb;
+                 //If we have more than one or 0 ids in the array then return and stop operation
+                 //If we have no chapters or posts to distribute data also stop operation
+                 $prefixx = $wpdb->prefix;
+                 $post_meta_texte = "_postmeta";
+
+                 //getting metadata of site-meta/books info post
+                 $select_all_id_blogs = $wpdb->get_results("
+                     SELECT blog_id FROM students_wp_blogs",ARRAY_N);
+                  foreach ($select_all_id_blogs as $key1 => $valuee) {
+                    $postMetaTable = $prefixx . $valuee[0] . $post_meta_texte;
+                    $metadata_meta_key_site = 'smdlc_'.strtolower($key).'_lifecycle_';
+                $recuperation_de_la_table = $wpdb->get_results("
+                    DELETE FROM $postMetaTable  WHERE meta_key like '%{$metadata_meta_key_site}%' ");
+
+
+                  }
+          }
+}
+
+if (isset($_GET['hello'])) {
+runMyFunction();
+//refresh the page
+?> <meta http-equiv="refresh" content="0;URL=admin.php?page=smd_net_set_page"><?php
+}
+if ($shares11[$key]=='1') {
+echo '<a style="color:red; text-decoration: none; font-size: 14px;"href = "admin.php?page=smd_net_set_page&hello=true&field_name='.$key.'&sharekey='.$shares11[$key].'">X</a>';}
+
+?>
+      &nbsp;&nbsp;
+    <?php } ?>
+
       <label for="smdlc_net_disable[<?=$key?>]">Disable <input type="radio"  name="smdlc_net_[<?=$key?>]" value="1" id="smdlc_net_disable[<?=$key?>]" <?php if ($shares11[$key]=='1') { echo "checked='checked'"; }
       ?>  ></label>
       <label for="smdlc_net_local_value[<?=$key?>]">Local value <input type="radio"  name="smdlc_net_[<?=$key?>]" value="0" id="smdlc_net_local_value[<?=$key?>]" <?php if ($shares11[$key]=='0' ) { echo "checked='checked'"; }
