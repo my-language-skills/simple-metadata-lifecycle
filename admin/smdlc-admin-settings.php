@@ -65,10 +65,10 @@ function smdlc_add_lyfecycle_settings() {
 		$network_freezes = [];
 		//in case of multisite installation, we collect options for network
 		if (is_multisite()){
-			$network_locations = get_blog_option(1, 'smdlc_net_locations');
-			$network_shares = get_blog_option(1, 'smdlc_net_shares');
-			$network_shares11 = get_blog_option(1, 'smdlc_net_');
-			$network_freezes = get_blog_option(1, 'smdlc_net_freezes');
+			$network_locations = get_site_option('smdlc_net_locations');
+			$network_shares = get_site_option('smdlc_net_shares');
+			$network_shares11 = get_site_option('smdlc_net_');
+			$network_freezes = get_site_option('smdlc_net_freezes');
 		}
 
 		//creating fields for activating metadata in every public post

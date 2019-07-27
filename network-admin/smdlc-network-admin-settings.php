@@ -35,16 +35,16 @@ function smdlc_add_network_settings() {
     add_settings_section( 'smdlc_network_meta_properties', '', '', 'smdlc_network_meta_properties' );
 
     //registering settings
-    register_setting('smdlc_network_meta_locations', 'smdlc_net_locations');
-	register_setting ('smdlc_network_meta_properties', 'smdlc_net_');
-	register_setting ('smdlc_network_meta_properties', 'smdlc_net_freezes');
+    add_site_option('smdlc_net_locations', '');
+	  add_site_option('smdlc_net_', '');
+    add_site_option('smdlc_net_freezes', '');
 
 
 	// getting options values from DB
 	$post_types = smd_get_all_post_types();
-	$locations = get_option('smdlc_net_locations');
-	$shares11 = get_option('smdlc_net_');
-	$freezes = get_option('smdlc_net_freezes');
+	$locations = get_site_option('smdlc_net_locations');
+	$shares11 = get_site_option('smdlc_net_');
+	$freezes = get_site_option('smdlc_net_freezes');
 
 	//adding settings for locations
 	foreach ($post_types as $post_type) {
@@ -250,7 +250,7 @@ function smdlc_update_network_locations() {
 	$locations = isset($_POST['smdlc_net_locations']) ? $_POST['smdlc_net_locations'] : array();
 
 	//collecting locations of general meta accumulative option from POST request
-	$locations_general = get_blog_option(1, 'smd_net_locations') ?: array();
+	$locations_general = get_site_option('smd_net_locations') ?: array();
 
 	$locations_general = array_merge($locations_general, $locations);
 
@@ -261,8 +261,8 @@ function smdlc_update_network_locations() {
 		unset($locations_general['site-meta']);
 	}
 
-	update_blog_option(1, 'smdlc_net_locations', $locations);
-	update_blog_option(1, 'smd_net_locations', $locations_general);
+	update_site_option('smdlc_net_locations', $locations);
+	update_site_option('smd_net_locations', $locations_general);
 
 	//Grabbing all the site IDs
     $siteids = $wpdb->get_col("SELECT blog_id FROM $wpdb->blogs");
@@ -318,7 +318,7 @@ function smdlc_update_network_options() {
 
 
     //updating network options in DB
-	update_blog_option(1, 'smdlc_net_', $shares11);
+	update_site_option('smdlc_net_', $shares11);
 
 	//Grabbing all the site IDs
     $siteids = $wpdb->get_col("SELECT blog_id FROM $wpdb->blogs");
