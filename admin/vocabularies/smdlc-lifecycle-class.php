@@ -272,7 +272,7 @@ class SMDLC_Metadata_Lifecycle{
             $this->metadata = get_post_meta( get_the_ID() );
         }
 
-		$html = "\n<!--LIFECYCLE METADATA-->\n";
+		$html = "\n/*--LIFECYCLE METADATA--*/\n";
 
 		//looping through all properties and printing tags only for those, which are defined
 		foreach ( self::$lifecycle_properties as $key => $desc ) {
@@ -287,15 +287,20 @@ class SMDLC_Metadata_Lifecycle{
 			if(empty($val) || $val == '--Select--'){
 				continue;
 			} else {
-				$html .= "<meta itemprop='$key' value='$val'>\n";
+				//$html .= "<meta itemprop='$key' value='$val'>\n";
+				$html	.= ","	==	$html[-1] ?	"\n"	:	",\n";
+				$html .= '	"'.$key.'":	"'.$val.'"';
 				if (('Book' == $type || 'Chapter' == $type) && 'version' == $key){
-					$html .= "<meta itemprop='bookEdition' value='$val'>\n";
+					//$html .= "<meta itemprop='bookEdition' value='$val'>\n";
+					$html	.= ","	==	$html[-1] ?	"\n"	:	",\n";
+					$html .= '	"bookEdition":	"'.$val.'"';
 				}
 			}
 		}
 
-		$html .= "<!--END OF LIFECYCLE METADATA-->\n";
+		$html .= "\n/*--END OF LIFECYCLE METADATA--*/\n";
 
 		return $html;
 	}
+
 }
