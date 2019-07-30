@@ -67,7 +67,7 @@ function smdlc_add_network_settings() {
       $shares11[$key] = !empty($shares11[$key]) ? $shares11[$key] : '0';
       ?>
       <?php if ($shares11[$key]=='1') {
-
+        if (isset($_GET['hello'])) {
         function runMyFunction() {
           if (isset($_GET['field_name'])) {
             $key = $_GET['field_name'];
@@ -92,7 +92,6 @@ function smdlc_add_network_settings() {
           }
 }
 
-if (isset($_GET['hello'])) {
 runMyFunction();
 //refresh the page
 ?> <meta http-equiv="refresh" content="0;URL=admin.php?page=smd_net_set_page"><?php
