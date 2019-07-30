@@ -175,6 +175,8 @@ function smdlc_network_render_metabox_schema_locations(){
 		</form>
     <br>
     <?php
+        if (isset($_GET['hello1'])) {
+
     function runMyFunction1() {
       if (isset($_GET['field_name'])) {
           global $wpdb;
@@ -183,23 +185,30 @@ function smdlc_network_render_metabox_schema_locations(){
              $prefixx = $wpdb->prefix;
              $post_meta_texte = "_postmeta";
 
+
+
              //getting metadata of site-meta/books info post
+if (!is_plugin_active('pressbooks/pressbooks.php') ){                 //plugin is activated
+
              $select_all_id_blogs = $wpdb->get_results("
                  SELECT blog_id FROM students_wp_blogs",ARRAY_N);
+                 }
+                 else {
+                   $select_all_id_blogs = $wpdb->get_results("
+                       SELECT blog_id FROM pb_int_wp_blogs",ARRAY_N);
+                 }
               foreach ($select_all_id_blogs as $key1 => $valuee) {
                 $postMetaTable = $prefixx . $valuee[0] . $post_meta_texte;
                 $metadata_meta_key_site = 'smdlc_';
             $recuperation_de_la_table = $wpdb->get_results("
-                DELETE FROM $postMetaTable  WHERE meta_key like '%{$metadata_meta_key_site}%' ");
-
-
+                DELETE FROM $postMetaTable  WHERE meta_key like '{$metadata_meta_key_site}%' ");
               }
       }
 }
-    if (isset($_GET['hello1'])) {
+
     runMyFunction1();
     //refresh the page
-    ?> <meta http-equiv="refresh" content="0;URL=admin.php?page=smd_net_set_page"><?php
+?>  <meta http-equiv="refresh" content="0;URL=admin.php?page=smd_net_set_page"><?php
     } ?>
     <form class=""  method="post">
       <tr><th scope="row">Delete all data</th><td > <?php  echo "<a onClick=\"javascript: return confirm('Are you sure to delete all meta-data of the plugin Lifeclycle?');\" style='color:red; text-decoration: none; font-size: 14px;'href = 'admin.php?page=smd_net_set_page&hello1=true&field_name=patatevie&sharekey=onestla'>X</a>"; ?>
