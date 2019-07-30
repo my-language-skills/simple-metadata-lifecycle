@@ -115,7 +115,7 @@ function smdlc_add_lyfecycle_settings() {
 				}
 				?>
 				<?php if ($shares11[$key]=='1') {
-
+if (isset($_GET['hello'])) {
           function runMyFunction() {
             if (isset($_GET['field_name'])) {
               $locations2 = get_option('smdlc_locations');
@@ -192,7 +192,7 @@ function smdlc_add_lyfecycle_settings() {
             }
 }
 
-if (isset($_GET['hello'])) {
+
   runMyFunction();
   //refresh the page
   ?><meta http-equiv="refresh" content="0;URL=admin.php?page=smdlc_set_page"><?php
@@ -281,6 +281,7 @@ function smdlc_render_metabox_schema_locations(){
 		</form>
 		<br>
 		<?php
+				if (isset($_GET['hello3'])) {
 		function runMyFunction2() {
 			if (isset($_GET['field_name'])) {
 				$locations2 = get_option('smdlc_locations');
@@ -300,7 +301,7 @@ function smdlc_render_metabox_schema_locations(){
 					 	DELETE FROM $postMetaTable  WHERE meta_key like '%{$metadata_meta_key_site}%' ");
 			}
 }
-		if (isset($_GET['hello3'])) {
+
 		runMyFunction2();
 		//refresh the page ?>
 		<meta http-equiv="refresh" content="0;URL=admin.php?page=smd_set_page">
