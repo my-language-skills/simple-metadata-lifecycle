@@ -272,8 +272,7 @@ class SMDLC_Metadata_Lifecycle{
             $this->metadata = get_post_meta( get_the_ID() );
         }
 
-		$html = "\n/*--LIFECYCLE METADATA--*/\n";
-
+		$html 	= 	",";
 		//looping through all properties and printing tags only for those, which are defined
 		foreach ( self::$lifecycle_properties as $key => $desc ) {
 			//Constructing the key for the data
@@ -297,8 +296,6 @@ class SMDLC_Metadata_Lifecycle{
 				}
 			}
 		}
-
-		$html .= "\n/*--END OF LIFECYCLE METADATA--*/\n";
 
 		return $html;
 	}
