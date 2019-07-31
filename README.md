@@ -36,6 +36,11 @@ The Simple Metadata Life Cycle plugin is supplied "as is" and all use is at your
 ## Changelog
 Take a look at detailed changelog [here](/doc/CHANGELOG.md)
 ### 1.1
+* **ADDITIONS**
+		* Internationalization
+		* Disable and delete data of fields in database
+		* Create radio button for settings of fields
+    
 * **REMOVED**
     *  Auto update from github
 
