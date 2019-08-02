@@ -272,13 +272,13 @@ class SMDLC_Metadata_Lifecycle{
             $this->metadata = get_post_meta( get_the_ID() );
         }
 
-		$html 	= 	",";
+		$html = ",";
 		//looping through all properties and printing tags only for those, which are defined
 		foreach ( self::$lifecycle_properties as $key => $desc ) {
 			//Constructing the key for the data
 			//Add strtolower in all vocabs remember
+			//example smdlc_version_lifecycle_post
 			$dataKey = strtolower('smdlc_' . $key . '_' . $this->groupId .'_'. $this->type_level);
-
 			//Getting the data
 			$val = $this->smdlc_get_value($dataKey);
 
@@ -286,7 +286,6 @@ class SMDLC_Metadata_Lifecycle{
 			if(empty($val) || $val == '--Select--'){
 				continue;
 			} else {
-				//$html .= "<meta itemprop='$key' value='$val'>\n";
 				$html	.= ","	==	$html[-1] ?	"\n"	:	",\n";
 				$html .= '	"'.$key.'":	"'.$val.'"';
 				if (('Book' == $type || 'Chapter' == $type) && 'version' == $key){
@@ -296,7 +295,7 @@ class SMDLC_Metadata_Lifecycle{
 				}
 			}
 		}
-
+		$html	=	","	==	$html	?	""	:	$html;
 		return $html;
 	}
 
