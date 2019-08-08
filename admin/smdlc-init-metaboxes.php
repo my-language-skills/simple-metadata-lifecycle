@@ -25,8 +25,15 @@ defined ("ABSPATH") or die ("No script assholes!");
 */
 
 function smdlc_create_metaboxes() {
-
+	//Don't display for blog id 1
 	if (1 != get_current_blog_id() || !is_multisite()){
+
+		// Can't use get_post_id() becouse it return void outside the loop of Wordpress
+		$post_id = isset($_GET['post']) ? $_GET['post'] : '';
+		//Don't show life cycle metaboxes if the post type is not a Creative Work subtype
+		if(!smd_is_post_CreativeWork($post_id)){ //smd-general-function.php
+			return;
+		}
 
 		//getting locations to place metaboxes
 		$active_locations = get_option('smdlc_locations') ?: [];
@@ -35,7 +42,6 @@ function smdlc_create_metaboxes() {
 		foreach ($active_locations as $location => $val) {
 			new lifecycle_meta($location);
 		}
-
 	}
 
 }
