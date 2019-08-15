@@ -38,6 +38,7 @@ function smdlc_print_tags ($type) {
 	//Retrieve the current post id
 	$post_id = get_the_ID();
 
+	//Stop the script if the post is not CreativeWork
 	if(!smd_is_post_CreativeWork($post_id) && !is_plugin_active('pressbooks/pressbooks.php')){
 		return;
 	}

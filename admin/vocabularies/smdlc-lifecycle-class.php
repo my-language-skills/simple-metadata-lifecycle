@@ -289,12 +289,12 @@ class SMDLC_Metadata_Lifecycle{
 				$html	.= ","	==	$html[-1] ?	"\n"	:	",\n";
 				$html .= '	"'.$key.'":	"'.$val.'"';
 				if (('Book' == $type || 'Chapter' == $type) && 'version' == $key){
-					//$html .= "<meta itemprop='bookEdition' value='$val'>\n";
 					$html	.= ","	==	$html[-1] ?	"\n"	:	",\n";
 					$html .= '	"bookEdition":	"'.$val.'"';
 				}
 			}
 		}
+		//if the html is just ',' delete it
 		$html	=	","	==	$html	?	""	:	$html;
 		return $html;
 	}
