@@ -288,7 +288,7 @@ class SMDLC_Metadata_Lifecycle{
 			} else {
 				$html	.= ","	==	$html[-1] ?	"\n"	:	",\n";
 				$html .= '	"'.$key.'":	"'.$val.'"';
-				if (('Book' == $type || 'Chapter' == $type) && 'version' == $key){
+				if ('Book' == $type && 'version' == $key){
 					$html	.= ","	==	$html[-1] ?	"\n"	:	",\n";
 					$html .= '	"bookEdition":	"'.$val.'"';
 				}
