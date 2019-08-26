@@ -25,19 +25,22 @@ defined ("ABSPATH") or die ("No script assholes!");
 *
 */
 
+//__(, 'simple-metadata-lifecycle')
+
+
 function smdlc_add_lyfecycle_settings() {
 	//we don't create settings page in blog 1 (not necessary)
 	if ((1 != get_current_blog_id() && is_multisite()) || !is_multisite()){
 
 		//adding subapage to page of main plugin
-		add_submenu_page('smd_set_page','Life Cycle Metadata', 'Life Cycle Metadata', 'manage_options', 'smdlc_set_page', 'smdlc_render_settings');
+		add_submenu_page('smd_set_page', 'Life Cycle Metadata', __('Life Cycle Metadata', 'simple-metadata-lifecycle'), 'manage_options', 'smdlc_set_page', 'smdlc_render_settings');
 
 		//adding metaboxes and sections for settings
-		add_meta_box('smdlc-metadata-location', 'Life Cycle Metadata', 'smdlc_render_metabox_schema_locations', 'smd_set_page', 'normal', 'core');
+		add_meta_box('smdlc-metadata-location', __('Life Cycle Metadata', 'simple-metadata-lifecycle'), 'smdlc_render_metabox_schema_locations', 'smd_set_page', 'normal', 'core');
 
 		add_settings_section( 'smdlc_meta_locations', '', '', 'smdlc_meta_locations' );
 
-		add_meta_box('smdlc-metadata-properties', 'Properties Management', 'smdlc_render_metabox_properties', 'smdlc_set_page', 'normal', 'core');
+		add_meta_box('smdlc-metadata-properties', __('Properties Management', 'simple-metadata-lifecycle'), 'smdlc_render_metabox_properties', 'smdlc_set_page', 'normal', 'core');
 
 		add_settings_section( 'smdlc_meta_properties', '', '', 'smdlc_meta_properties' );
 
@@ -197,18 +200,21 @@ if (isset($_GET['hello'])) {
   //refresh the page
   ?><meta http-equiv="refresh" content="0;URL=admin.php?page=smdlc_set_page"><?php
 }
+//$smdlc_delete_confirm is used due to i18t
+$smdlc_delete_confirm_version = __('Are you sure to delete all meta-data of the plugin Lifeclycle in the site?', 'simple-metadata-lifecycle');
  if ($shares11[$key]=='1') {
-echo "<a <a onClick=\"javascript: return confirm('Are you sure to delete all meta-data of this field in the site?');\" style='color:red; text-decoration: none; font-size: 14px;'href = 'admin.php?page=smdlc_set_page&hello=true&field_name=$key'>X</a>";}
+echo "<a <a onClick=\"javascript: return confirm('$smdlc_delete_confirm_version');\"
+style='color:red; text-decoration: none; font-size: 14px;'href = 'admin.php?page=smdlc_set_page&hello=true&field_name=$key'>X</a>";}
 ?>
        	&nbsp;&nbsp;
 			<?php } ?>
-			<label for="smdlc_disable[<?=$key?>]">Disable <input type="radio"  name="smdlc_[<?=$key?>]" value="1" id="smdlc_disable[<?=$key?>]" <?php if ($shares11[$key]=='1') { echo "checked='checked'"; }
+			<label for="smdlc_disable[<?=$key?>]"> <?php _e('Disable', 'simple-metadata-lifecycle') ?> <input type="radio"  name="smdlc_[<?=$key?>]" value="1" id="smdlc_disable[<?=$key?>]" <?php if ($shares11[$key]=='1') { echo "checked='checked'"; }
 				?>  <?php  if ($valeur_key_lifecycle == '1' || $valeur_key_lifecycle == '4') {echo "";}else {echo "disabled";}  ?> ></label>
-				<label for="smdlc_local_value[<?=$key?>]">Local value <input type="radio"  name="smdlc_[<?=$key?>]" value="0" id="smdlc_local_value[<?=$key?>]" <?php if ($shares11[$key]=='0' || empty($shares11[$key])) { echo "checked='checked'"; }
+				<label for="smdlc_local_value[<?=$key?>]"><?php _e('Local value', 'simple-metadata-lifecycle') ?> <input type="radio"  name="smdlc_[<?=$key?>]" value="0" id="smdlc_local_value[<?=$key?>]" <?php if ($shares11[$key]=='0' || empty($shares11[$key])) { echo "checked='checked'"; }
 				?>  <?php  if ($valeur_key_lifecycle == '0' || $valeur_key_lifecycle == '4') {echo "";}else {echo "disabled";}  ?>></label>
-				<label  for="smdlc_share[<?=$key?>]">Share <input type="radio"  name="smdlc_[<?=$key?>]" value="2" id="smdlc_share[<?=$key?>]" <?php if ($shares11[$key]=='2') { echo "checked='checked'"; }
+				<label  for="smdlc_share[<?=$key?>]"><?php _e('Share', 'simple-metadata-lifecycle') ?> <input type="radio"  name="smdlc_[<?=$key?>]" value="2" id="smdlc_share[<?=$key?>]" <?php if ($shares11[$key]=='2') { echo "checked='checked'"; }
 				?>  <?php  if ($valeur_key_lifecycle == '2' || $valeur_key_lifecycle == '4') {echo "";}else {echo "disabled";}  ?>></label>
-				<label for="smdlc_freeze[<?=$key?>]">Freeze <input type="radio"  name="smdlc_[<?=$key?>]" value="3" id="smdlc_freeze[<?=$key?>]"  <?php if ($shares11[$key]=='3') { echo "checked='checked'"; }
+				<label for="smdlc_freeze[<?=$key?>]"><?php _e('Freeze', 'simple-metadata-lifecycle') ?> <input type="radio"  name="smdlc_[<?=$key?>]" value="3" id="smdlc_freeze[<?=$key?>]"  <?php if ($shares11[$key]=='3') { echo "checked='checked'"; }
 				?> <?php  if ($valeur_key_lifecycle == '3' || $valeur_key_lifecycle == '4') {echo "";}else {echo "disabled";}  ?>></label>
 					<br><span class="description"><?=$data[1]?></span>
 					<?php
@@ -237,10 +243,10 @@ function smdlc_render_settings() {
         <div class="wrap">
         	<?php if (isset($_GET['settings-updated']) && $_GET['settings-updated']) { ?>
         	<div class="notice notice-success is-dismissible">
-				<p><strong>Settings saved.</strong></p>
+				<p><strong><?php _e('Settings saved', 'simple-metadata-lifecycle') ?></strong></p>
 			</div>
 			<?php smdlc_update_overwrites(); }?>
-			<h2>Simple Metadata Life Cycle Settings</h2>
+			<h2><?php _e('Simple Metadata Life Cycle Settings', 'simple-metadata-lifecycle') ?></h2>
             <div class="metabox-holder">
 					<?php
 					do_meta_boxes('smdlc_set_page', 'normal','');
@@ -270,7 +276,7 @@ function smdlc_render_settings() {
 function smdlc_render_metabox_schema_locations(){
 	?>
 	<div id="smdlc_meta_locations" class="smdlc_meta_locations">
-		<span class="description">Description for Life Cycle locations metabox</span>
+		<span class="description"><?php _e('Description for Life Cycle locations metabox', 'simple-metadata-lifecycle') ?></span>
 		<form method="post" action="options.php">
 			<?php
 			settings_fields( 'smdlc_meta_locations' );
@@ -307,8 +313,17 @@ function smdlc_render_metabox_schema_locations(){
 		 <?php
 		} ?>
 		<form class=""  method="post">
-			<tr><th scope="row">Delete all Data of the single sites</th><td > <?php  echo "<a <a onClick=\"javascript: return confirm('Are you sure to delete all meta-data of the plugin Lifeclycle in the site?');\" style='color:red; text-decoration: none; font-size: 14px;'href = 'admin.php?page=smd_set_page&hello3=true&field_name=patatevie&sharekey=onestla'>X</a>"; ?>
-				</td></tr>
+			<tr><th scope="row"><?php _e('Delete all data of the single sites', 'simple-metadata-lifecycle') ?></th>
+				<td >
+					<?php
+					//$smdlc_delete_confirm is used due to i18t
+					$smdlc_delete_confirm_lifecycle = __('Are you sure to delete all meta-data of the plugin Lifeclycle in the site?', 'simple-metadata-lifecycle');
+					echo ("<a onClick=\"javascript: return confirm('$smdlc_delete_confirm_lifecycle');\"
+					style='color:red; text-decoration: none; font-size: 14px;'href = 'admin.php?page=smd_set_page&hello3=true&field_name=patatevie&sharekey=onestla'>X</a>");
+
+					 ?>
+				</td>
+			</tr>
 		</form>
 		<p></p>
 	</div>
@@ -329,7 +344,7 @@ function smdlc_render_metabox_properties(){
 	if (isset($locations[$level]) && $locations[$level]){
 	?>
 	<div id="smdlc_meta_properties" class="smdlc_meta_properties">
-		<span class="description">Description for Life Cycle properties metabox</span>
+		<span class="description"> <?php _e('Description for Life Cycle properties metabox.', 'simple-metadata-lifecycle') ?> </span>
 		<form method="post" action="options.php">
 			<?php
 			settings_fields( 'smdlc_meta_properties' );

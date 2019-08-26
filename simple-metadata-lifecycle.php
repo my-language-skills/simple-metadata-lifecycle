@@ -59,3 +59,14 @@ if(is_plugin_active('simple-metadata/simple-metadata.php')){
 		});
 	}
 }
+
+
+/**
+ * Load plugin textdomain.
+ */
+function smlc_load_textdomain() {
+  //load_plugin_textdomain( 'simple-metadata-lifecycle', false, basename( dirname( __FILE__ ) ) . '/languages' );
+	load_plugin_textdomain( 'simple-metadata-lifecycle', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/'  );
+}
+
+add_action( 'plugins_loaded', 'smlc_load_textdomain' );

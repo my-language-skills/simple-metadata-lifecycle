@@ -24,11 +24,12 @@ defined ("ABSPATH") or die ("No script assholes!");
 *
 */
 
+
 function smdlc_add_network_settings() {
 
     //adding settings metaboxes and settigns sections
-    add_meta_box('smdlc-metadata-network-location', 'Life Cycle Metadata', 'smdlc_network_render_metabox_schema_locations', 'smd_net_set_page', 'normal', 'core');
-    add_meta_box('smdlc-network-metadata-properties', 'Life Cycle Properties Management', 'smdlc_network_render_metabox_properties', 'smd_net_set_page', 'normal', 'core');
+    add_meta_box('smdlc-metadata-network-location', __('Life Cycle Metadata', 'simple-metadata-lifecycle'), 'smdlc_network_render_metabox_schema_locations', 'smd_net_set_page', 'normal', 'core');
+    add_meta_box('smdlc-network-metadata-properties', __('Life Cycle Properties Management', 'simple-metadata-lifecycle'), 'smdlc_network_render_metabox_properties', 'smd_net_set_page', 'normal', 'core');
 
     add_settings_section( 'smdlc_network_meta_locations', '', '', 'smdlc_network_meta_locations' );
 
@@ -98,20 +99,23 @@ runMyFunction();
 //refresh the page
 ?> <meta http-equiv="refresh" content="0;URL=admin.php?page=smd_net_set_page"><?php
 }
+//$smdlc_delete_confirm is used due to i18t
+$smdlc_delete_confirm_version = __('Are you sure to delete all meta-data of the plugin Lifeclycle in the site?', 'simple-metadata-lifecycle');
 if ($shares11[$key]=='1') {
-  echo "<a <a onClick=\"javascript: return confirm('Are you sure to delete all meta-data of this field ?');\" style='color:red; text-decoration: none; font-size: 14px;'href = 'admin.php?page=smd_net_set_page&hello=true&field_name=$key'>X</a>";}
+  echo "<a <a onClick=\"javascript: return confirm('$smdlc_delete_confirm_version');\"
+  style='color:red; text-decoration: none; font-size: 14px;'href = 'admin.php?page=smd_net_set_page&hello=true&field_name=$key'>X</a>";}
 
 ?>
       &nbsp;&nbsp;
     <?php } ?>
 
-      <label for="smdlc_net_disable[<?=$key?>]">Disable <input type="radio"  name="smdlc_net_[<?=$key?>]" value="1" id="smdlc_net_disable[<?=$key?>]" <?php if ($shares11[$key]=='1') { echo "checked='checked'"; }
+      <label for="smdlc_net_disable[<?=$key?>]"><?php _e('Disable', 'simple-metadata-lifecycle') ?> <input type="radio"  name="smdlc_net_[<?=$key?>]" value="1" id="smdlc_net_disable[<?=$key?>]" <?php if ($shares11[$key]=='1') { echo "checked='checked'"; }
       ?>  ></label>
-      <label for="smdlc_net_local_value[<?=$key?>]">Local value <input type="radio"  name="smdlc_net_[<?=$key?>]" value="0" id="smdlc_net_local_value[<?=$key?>]" <?php if ($shares11[$key]=='0' ) { echo "checked='checked'"; }
+      <label for="smdlc_net_local_value[<?=$key?>]"><?php _e('Local value', 'simple-metadata-lifecycle') ?> <input type="radio"  name="smdlc_net_[<?=$key?>]" value="0" id="smdlc_net_local_value[<?=$key?>]" <?php if ($shares11[$key]=='0' ) { echo "checked='checked'"; }
       ?>  ></label>
-      <label  for="smdlc_net_share[<?=$key?>]">Share <input type="radio"  name="smdlc_net_[<?=$key?>]" value="2" id="smdlc_net_share[<?=$key?>]" <?php if ($shares11[$key]=='2') { echo "checked='checked'"; }
+      <label  for="smdlc_net_share[<?=$key?>]"><?php _e('Share', 'simple-metadata-lifecycle') ?> <input type="radio"  name="smdlc_net_[<?=$key?>]" value="2" id="smdlc_net_share[<?=$key?>]" <?php if ($shares11[$key]=='2') { echo "checked='checked'"; }
       ?>  ></label>
-      <label for="smdlc_net_freeze[<?=$key?>]">Freeze <input type="radio"  name="smdlc_net_[<?=$key?>]" value="3" id="smdlc_net_freeze[<?=$key?>]"  <?php if ($shares11[$key]=='3') { echo "checked='checked'"; }
+      <label for="smdlc_net_freeze[<?=$key?>]"><?php _e('Freeze', 'simple-metadata-lifecycle') ?> <input type="radio"  name="smdlc_net_[<?=$key?>]" value="3" id="smdlc_net_freeze[<?=$key?>]"  <?php if ($shares11[$key]=='3') { echo "checked='checked'"; }
       ?> ></label>
 				<br><span class="description"><?=$data[1]?></span>
 			<?php
@@ -135,7 +139,7 @@ function smdlc_render_network_settings(){
 	    <div class="wrap">
 	    	<?php if (isset($_GET['settings-updated']) && $_GET['settings-updated']) { ?>
         	<div class="notice notice-success is-dismissible">
-				<p><strong>Settings saved.</strong></p>
+				<p><strong><?php _e('Settings saved', 'simple-metadata-lifecycle') ?></strong></p>
 			</div>
 			<?php } ?>
 		    <div class="metabox-holder">
@@ -167,7 +171,7 @@ function smdlc_render_network_settings(){
 function smdlc_network_render_metabox_schema_locations(){
 	?>
 	<div id="smdlc_network_meta_locations" class="smdlc_network_meta_locations">
-		<span class="description">Activate the public post types where metadata will be available.<br>If selected, site administrators can not modify.</span>
+		<span class="description"><?php _e('Activate the public post types where metadata will be available.If selected, site administrators can not modify.', 'simple-metadata-lifecycle') ?></span>
 		<form method="post" action="edit.php?action=smdlc_update_network_locations">
 			<?php
 			settings_fields( 'smdlc_network_meta_locations' );
@@ -213,7 +217,14 @@ if (!is_plugin_active('pressbooks/pressbooks.php') ){                 //plugin i
 ?>  <meta http-equiv="refresh" content="0;URL=admin.php?page=smd_net_set_page"><?php
     } ?>
     <form class=""  method="post">
-      <tr><th scope="row">Delete all data</th><td > <?php  echo "<a onClick=\"javascript: return confirm('Are you sure to delete all meta-data of the plugin Lifeclycle?');\" style='color:red; text-decoration: none; font-size: 14px;'href = 'admin.php?page=smd_net_set_page&hello1=true&field_name=patatevie&sharekey=onestla'>X</a>"; ?>
+      <tr><th scope="row"> <?php _e('Delete all data', 'simple-metadata-lifecycle')?> </th><td >
+
+        <?php
+        //$smdlc_delete_confirm is used due to i18t
+        $smdlc_delete_confirm_lifecycle = __('Are you sure to delete all meta-data of the plugin Lifeclycle in the site?', 'simple-metadata-lifecycle');
+        echo "<a onClick=\"javascript: return confirm('$smdlc_delete_confirm_lifecycle');\"
+      style='color:red; text-decoration: none; font-size: 14px;'href = 'admin.php?page=smd_net_set_page&hello1=true&field_name=patatevie&sharekey=onestla'>X</a>"; ?>
+
         </td></tr>
     </form>
 		<p></p>
@@ -231,7 +242,7 @@ if (!is_plugin_active('pressbooks/pressbooks.php') ){                 //plugin i
 function smdlc_network_render_metabox_properties(){
 	?>
 	<div id="smdlc_network_meta_properties" class="smdlc_network_meta_properties">
-		<span class="description">Control of the properties over the subsites.</span>
+		<span class="description"><?php _e('Control of the properties over the subsites.', 'simple-metadata-lifecycle') ?></span>
 		<form method="post" action="edit.php?action=smdlc_update_network_options">
 			<?php
 			settings_fields( 'smdlc_network_meta_properties' );
