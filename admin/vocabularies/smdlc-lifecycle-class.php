@@ -261,18 +261,20 @@ class SMDLC_Metadata_Lifecycle{
 	/**
 	 * Function that creates the vocabulary metatags
 	 *
+	 * @return $metadata
+	 *
 	 * @since    0.x
 	 * @access   public
 	 */
 	public function smdlc_get_metatags($type) {
 		//Getting the information from the database
-        if($this->type_level == 'metadata' || $this->type_level == 'site-meta'){
-            $this->metadata = self::get_site_meta_metadata();
-        } else {
-            $this->metadata = get_post_meta( get_the_ID() );
-        }
+		if($this->type_level == 'metadata' || $this->type_level == 'site-meta'){
+		    $this->metadata = self::get_site_meta_metadata();
+		} else {
+		    $this->metadata = get_post_meta( get_the_ID() );
+		}
 
-		$html = ",";
+		$metadata	=	[];
 		//looping through all properties and printing tags only for those, which are defined
 		foreach ( self::$lifecycle_properties as $key => $desc ) {
 			//Constructing the key for the data
@@ -286,17 +288,14 @@ class SMDLC_Metadata_Lifecycle{
 			if(empty($val) || $val == '--Select--'){
 				continue;
 			} else {
-				$html	.= ","	==	$html[-1] ?	"\n"	:	",\n";
-				$html .= '	"'.$key.'":	"'.$val.'"';
+				$metadata[$key]	=	$val;
 				if ('Book' == $type && 'version' == $key){
-					$html	.= ","	==	$html[-1] ?	"\n"	:	",\n";
-					$html .= '	"bookEdition":	"'.$val.'"';
+					$metadata['bookEdition'] = $val;
 				}
 			}
 		}
-		//if the html is just ',' delete it
-		$html	=	","	==	$html	?	""	:	$html;
-		return $html;
+
+		return $metadata;
 	}
 
 }

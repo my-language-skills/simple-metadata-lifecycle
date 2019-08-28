@@ -23,6 +23,14 @@ use \vocabularies\SMDLC_Metadata_Lifecycle as lifecycle_meta;
 
 function smdlc_print_tags ($type) {
 
+	//Retrieve the current post id
+	$post_id = get_the_ID();
+
+	//Stop the script if the post is not CreativeWork
+	if(!smd_is_post_CreativeWork($post_id) && !is_plugin_active('pressbooks/pressbooks.php')){
+		return;
+	}
+
 	$locations = get_option('smdlc_locations');
 
 	//Checking if we are executing Book Info or Site-Meta data for the front page - Site Level - Book Level
@@ -35,25 +43,19 @@ function smdlc_print_tags ($type) {
 	//recieving post type of current post
 	$post_schema = get_post_type();
 
-	//Retrieve the current post id
-	$post_id = get_the_ID();
-
-	//Stop the script if the post is not CreativeWork
-	if(!smd_is_post_CreativeWork($post_id) && !is_plugin_active('pressbooks/pressbooks.php')){
-		return;
-	}
-
+	$metadata	=	[];
 	//defining if page is post or front-page
 	if ( is_front_page() ) {
 		if (isset($locations[$front_schema]) && $locations[$front_schema]) {
 			$lifecycle_meta = new lifecycle_meta($front_schema);
-			echo $lifecycle_meta->smdlc_get_metatags($type);
+			$metadata = array_merge($metadata, $lifecycle_meta->smdlc_get_metatags($type));
 		}
 	} elseif ( !is_home() ){
 		if (isset($locations[$post_schema]) && $locations[$post_schema] ) {
 			$lifecycle_meta = new lifecycle_meta($post_schema);
-			echo $lifecycle_meta->smdlc_get_metatags($type);
+			$metadata = array_merge($metadata, $lifecycle_meta->smdlc_get_metatags($type));
 		}
 	}
 
+	return $metadata;
 }
