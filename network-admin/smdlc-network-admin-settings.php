@@ -12,7 +12,6 @@
  * @since x.x.x (when the file was introduced)
  */
 
-
 use \vocabularies\SMDLC_Metadata_Lifecycle as lifecycle_meta;
 
 defined ("ABSPATH") or die ("No script assholes!");
@@ -43,9 +42,8 @@ function smdlc_add_network_settings() {
 
 	// getting options values from DB
 	$post_types = smd_get_all_post_types();
-	$locations = get_site_option('smdlc_net_locations');
-	$shares11 = get_site_option('smdlc_net_');
-	$freezes = get_site_option('smdlc_net_freezes');
+	$locations = (array) get_site_option('smdlc_net_locations');
+	$props_values = (array) get_site_option('smdlc_net_');
 
 	//adding settings for locations
 	foreach ($post_types as $post_type) {
@@ -64,10 +62,10 @@ function smdlc_add_network_settings() {
 
 	//adding settings for educational properties management
   foreach (lifecycle_meta::$lifecycle_properties as $key => $data) {
-		add_settings_field ('smdlc_net_'.$key, ucfirst($data[0]), function () use ($key, $data, $shares11, $freezes){
-      $shares11[$key] = !empty($shares11[$key]) ? $shares11[$key] : '0';
+		add_settings_field ('smdlc_net_'.$key, ucfirst($data[0]), function () use ($key, $data, $props_values){
+      $props_values[$key] = !empty($props_values[$key]) ? $props_values[$key] : '0';
       ?>
-      <?php if ($shares11[$key]=='1') {
+      <?php if ($props_values[$key]=='1') {
         if (isset($_GET['hello'])) {
         function runMyFunction() {
           if (isset($_GET['field_name'])) {
@@ -101,7 +99,7 @@ runMyFunction();
 }
 //$smdlc_delete_confirm is used due to i18t
 $smdlc_delete_confirm_version = __('Are you sure to delete all meta-data of the plugin Lifeclycle in the site?', 'simple-metadata-lifecycle');
-if ($shares11[$key]=='1') {
+if ($props_values[$key]=='1') {
   echo "<a <a onClick=\"javascript: return confirm('$smdlc_delete_confirm_version');\"
   style='color:red; text-decoration: none; font-size: 14px;'href = 'admin.php?page=smd_net_set_page&hello=true&field_name=$key'>X</a>";}
 
@@ -109,13 +107,13 @@ if ($shares11[$key]=='1') {
       &nbsp;&nbsp;
     <?php } ?>
 
-      <label for="smdlc_net_disable[<?=$key?>]"><?php _e('Disable', 'simple-metadata-lifecycle') ?> <input type="radio"  name="smdlc_net_[<?=$key?>]" value="1" id="smdlc_net_disable[<?=$key?>]" <?php if ($shares11[$key]=='1') { echo "checked='checked'"; }
+      <label for="smdlc_net_disable[<?=$key?>]"><?php _e('Disable', 'simple-metadata-lifecycle') ?> <input type="radio"  name="smdlc_net_[<?=$key?>]" value="1" id="smdlc_net_disable[<?=$key?>]" <?php if ($props_values[$key]=='1') { echo "checked='checked'"; }
       ?>  ></label>
-      <label for="smdlc_net_local_value[<?=$key?>]"><?php _e('Local value', 'simple-metadata-lifecycle') ?> <input type="radio"  name="smdlc_net_[<?=$key?>]" value="0" id="smdlc_net_local_value[<?=$key?>]" <?php if ($shares11[$key]=='0' ) { echo "checked='checked'"; }
+      <label for="smdlc_net_local_value[<?=$key?>]"><?php _e('Local value', 'simple-metadata-lifecycle') ?> <input type="radio"  name="smdlc_net_[<?=$key?>]" value="0" id="smdlc_net_local_value[<?=$key?>]" <?php if ($props_values[$key]=='0' ) { echo "checked='checked'"; }
       ?>  ></label>
-      <label  for="smdlc_net_share[<?=$key?>]"><?php _e('Share', 'simple-metadata-lifecycle') ?> <input type="radio"  name="smdlc_net_[<?=$key?>]" value="2" id="smdlc_net_share[<?=$key?>]" <?php if ($shares11[$key]=='2') { echo "checked='checked'"; }
+      <label  for="smdlc_net_share[<?=$key?>]"><?php _e('Share', 'simple-metadata-lifecycle') ?> <input type="radio"  name="smdlc_net_[<?=$key?>]" value="2" id="smdlc_net_share[<?=$key?>]" <?php if ($props_values[$key]=='2') { echo "checked='checked'"; }
       ?>  ></label>
-      <label for="smdlc_net_freeze[<?=$key?>]"><?php _e('Freeze', 'simple-metadata-lifecycle') ?> <input type="radio"  name="smdlc_net_[<?=$key?>]" value="3" id="smdlc_net_freeze[<?=$key?>]"  <?php if ($shares11[$key]=='3') { echo "checked='checked'"; }
+      <label for="smdlc_net_freeze[<?=$key?>]"><?php _e('Freeze', 'simple-metadata-lifecycle') ?> <input type="radio"  name="smdlc_net_[<?=$key?>]" value="3" id="smdlc_net_freeze[<?=$key?>]"  <?php if ($props_values[$key]=='3') { echo "checked='checked'"; }
       ?> ></label>
 				<br><span class="description"><?=$data[1]?></span>
 			<?php
@@ -334,12 +332,12 @@ function smdlc_update_network_options() {
 
     //collecting network options values from request
 
-    $shares11 = isset($_POST['smdlc_net_']) ? $_POST['smdlc_net_'] : array();
+    $props_values = isset($_POST['smdlc_net_']) ? $_POST['smdlc_net_'] : array();
     //if property is frozen, it's automatically shared
 
 
     //updating network options in DB
-	update_site_option('smdlc_net_', $shares11);
+	update_site_option('smdlc_net_', $props_values);
 
 	//Grabbing all the site IDs
     $siteids = $wpdb->get_col("SELECT blog_id FROM $wpdb->blogs");
@@ -355,12 +353,12 @@ function smdlc_update_network_options() {
 
     	//> we merge values received from network settings with local values of every blog
 
-    	$shares11_local = get_option('smdlc_') ?: array();
-    	$shares11_local = array_merge($shares11_local, $shares11);
+    	$props_values_local = get_option('smdlc_') ?: array();
+    	$props_values_local = array_merge($props_values_local, $props_values);
     	//<
 
     	//updating local options
-    	update_option('smdlc_', $shares11_local);
+    	update_option('smdlc_', $props_values_local);
 
     	smdlc_update_overwrites();
     }
