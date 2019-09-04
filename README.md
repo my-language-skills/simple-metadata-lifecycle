@@ -35,14 +35,17 @@ The Simple Metadata Life Cycle plugin is supplied "as is" and all use is at your
 
 ## Changelog
 Take a look at detailed changelog [here](/doc/CHANGELOG.md)
+
+### 1.2
+* Changed from micro-data to json-ld.
+* Internationalization
+* Make it work only with CreatiWork post type
+* Bug fix
+
 ### 1.1
-* **ADDITIONS**
-		* Internationalization
-		* Disable and delete data of fields in database
-		* Create radio button for settings of fields
-    
-* **REMOVED**
-    *  Auto update from github
+* Disable and delete data of fields in database
+* Create radio button for settings of fields
+*  Auto update from github
 
 ### 1.0
 * Initial release

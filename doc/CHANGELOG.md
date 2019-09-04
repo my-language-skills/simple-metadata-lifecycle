@@ -1,4 +1,22 @@
 # Changelog
+## 1.2
+* Plugin
+  * **Changed** network options from option table to sitemeta table
+  * **Changed** Make the plugin work only for Creative Works type
+  * **Changed** Microdata to json-ld
+  * **Fixed** warning in setting page of Life Cycle
+
+* Chapter
+  * **Remove** bookEdition
+
+
+## 1.1
+* **Additions**
+		* Disable and delete data of fields in database
+		* Create radio button for settings of fields
+
+* **Remove**
+    *  Auto update from github
 
 ## 1.0
 * **Additions**

@@ -77,13 +77,20 @@ As Simple metadata annotation is an extension of Simple metadata, visit the [Sim
 
 == Changelog ==
 
+= 1.2 =
+* Changed from micro-data to json-ld.
+* Internationalization
+* Make it work only with CreatiWork post type
+* Bug fix
+
+= 1.1 =
+* Disable and delete data of fields in database
+* Create radio button for settings of fields
+*  Auto update from github
+
 = 1.0 =
-* Initial release.
-
-
-== Upgrade Notice ==
-
-= 1.0 =
+* Initial release
+* Version property created
 
 == Disclaimers ==
 
