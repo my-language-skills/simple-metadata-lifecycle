@@ -1,5 +1,5 @@
 === Simple metadata lifecycle ===
-Contributors: colomet, danzhik, huguespages, davideC00
+Contributors: colomet, danzhik, huguespages, dcazzorla
 Donate link: https://opencollective.com/mylanguageskills
 Tags: multisite, pressbooks, simple metadata, metadata, schema.org, rich snippets, wordpress-plugin,
 Requires at least: 5.2
